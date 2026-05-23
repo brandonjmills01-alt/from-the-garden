@@ -753,19 +753,28 @@
   // To add a new product: copy a product object
   // below and fill in your details.
   // =============================================
+  // Shared stem options and add-ons used across all products
+  const STEM_OPTIONS = [
+    { id: 'mini',     label: 'Mini',     stemDisplay: '6-8 stems',   stems: 6,  price: 35, desc: 'Perfect for a desk, a gift, or just because.' },
+    { id: 'standard', label: 'Standard', stemDisplay: '10-12 stems', stems: 10, price: 55, desc: 'Our most popular. Kraft paper with ribbon.', popular: true },
+    { id: 'premium',  label: 'Premium',  stemDisplay: '15-18 stems', stems: 15, price: 85, desc: 'The full From The Garden experience. Seasonal foliage included.' },
+  ];
+
+  const ADDONS = [
+    { id: 'babiesbreath', label: 'Babiesbreath Initial',      price: 15, desc: 'Baby's breath shaped into an initial' },
+    { id: 'calligraphy',  label: 'Custom Calligraphy Note',   price: 12, desc: 'Handwritten note, $10-$15' },
+    { id: 'flowerbox',    label: 'Flower Box',                price: 30, desc: 'Premium flower box packaging' },
+  ];
+
   const PRODUCTS = [
     {
       id: 'classic_roses',
       name: 'Classic Roses',
       emoji: '🌹',
-      tagline: 'Hand-wrapped, seasonally sourced roses.',
-      description: 'Fresh stems from Potomac Floral Wholesale, hand-arranged and kraft-wrapped with ribbon — built just for you.',
+      tagline: 'Hand-wrapped classic roses, seasonally sourced.',
+      description: 'Fresh classic rose stems from Potomac Floral Wholesale, hand-arranged and kraft-wrapped with ribbon — built just for you.',
       basePrice: 0,
-      stemOptions: [
-        { id: 'mini',     label: 'Mini',     stemDisplay: '6-8 stems',   stems: 6,  price: 35, desc: 'Perfect for a desk, a gift, or just because.' },
-        { id: 'standard', label: 'Standard', stemDisplay: '10-12 stems', stems: 10, price: 55, desc: 'Our most popular. Kraft paper with ribbon.', popular: true },
-        { id: 'premium',  label: 'Premium',  stemDisplay: '15-18 stems', stems: 15, price: 85, desc: 'The full From The Garden experience. Seasonal foliage included.' },
-      ],
+      stemOptions: STEM_OPTIONS,
       colors: [
         { id: 'red',      label: 'Classic Red',  hex: '#C0392B',  emoji: '🌹' },
         { id: 'white',    label: 'Pure White',   hex: '#F5F0EB',  emoji: '🤍' },
@@ -774,26 +783,62 @@
         { id: 'mixed',    label: 'Mixed',        hex: 'linear-gradient(135deg,#C0392B 0%,#D4748A 40%,#F5F0EB 70%,#E8C94F 100%)', emoji: '💐' },
         { id: 'surprise', label: 'Surprise Me',  hex: '#7A9E8E',  emoji: '🪷' },
       ],
-      addOns: [
-        { id: 'vase',      label: 'Glass Vase',         price: 12, desc: 'Clear glass bud vase' },
-        { id: 'card',      label: 'Handwritten Card',   price:  5, desc: 'Personal message written by us' },
-        { id: 'giftwrap',  label: 'Gift Wrap Upgrade',  price:  8, desc: 'Premium tissue + ribbon packaging' },
-        { id: 'priority',  label: 'Same-Day Priority',  price: 15, desc: 'Priority sourcing & prep' },
-        { id: 'chocolate', label: 'Chocolate Box',      price: 18, desc: 'Artisan chocolates add-on' },
-      ],
+      addOns: ADDONS,
     },
-    // ── ADD MORE PRODUCTS HERE ──
-    // {
-    //   id: 'mixed_arrangement',
-    //   name: 'Mixed Arrangement',
-    //   emoji: '💐',
-    //   tagline: 'Seasonal wildflower mix.',
-    //   description: '...',
-    //   basePrice: 0,
-    //   stemOptions: [...],
-    //   colors: [...],
-    //   addOns: [...],
-    // },
+    {
+      id: 'garden_roses',
+      name: 'Garden Roses',
+      emoji: '🌺',
+      tagline: 'Full, lush garden roses with a vintage feel.',
+      description: 'Garden roses are larger, more fragrant, and fuller than classic roses — a luxurious choice for any occasion.',
+      basePrice: 0,
+      stemOptions: STEM_OPTIONS,
+      colors: [
+        { id: 'red',      label: 'Deep Red',     hex: '#8B1A1A',  emoji: '🌺' },
+        { id: 'white',    label: 'Cream White',  hex: '#F5F0EB',  emoji: '🤍' },
+        { id: 'pink',     label: 'Dusty Pink',   hex: '#C9788A',  emoji: '🌸' },
+        { id: 'peach',    label: 'Soft Peach',   hex: '#E8A87C',  emoji: '🍑' },
+        { id: 'mixed',    label: 'Mixed',        hex: 'linear-gradient(135deg,#8B1A1A 0%,#C9788A 40%,#F5F0EB 70%,#E8A87C 100%)', emoji: '💐' },
+        { id: 'surprise', label: 'Surprise Me',  hex: '#7A9E8E',  emoji: '🪷' },
+      ],
+      addOns: ADDONS,
+    },
+    {
+      id: 'sweetheart_roses',
+      name: 'Sweetheart Roses',
+      emoji: '🩷',
+      tagline: 'Delicate, small-headed roses perfect for gifting.',
+      description: 'Sweetheart roses are petite and charming — ideal for romantic gestures, bridesmaid bouquets, or everyday gifting.',
+      basePrice: 0,
+      stemOptions: STEM_OPTIONS,
+      colors: [
+        { id: 'red',      label: 'Classic Red',  hex: '#C0392B',  emoji: '🌹' },
+        { id: 'white',    label: 'Pure White',   hex: '#F5F0EB',  emoji: '🤍' },
+        { id: 'pink',     label: 'Soft Pink',    hex: '#F4A7B9',  emoji: '🩷' },
+        { id: 'lavender', label: 'Lavender',     hex: '#C9A7D4',  emoji: '💜' },
+        { id: 'mixed',    label: 'Mixed',        hex: 'linear-gradient(135deg,#C0392B 0%,#F4A7B9 40%,#F5F0EB 70%,#C9A7D4 100%)', emoji: '💐' },
+        { id: 'surprise', label: 'Surprise Me',  hex: '#7A9E8E',  emoji: '🪷' },
+      ],
+      addOns: ADDONS,
+    },
+    {
+      id: 'spray_roses',
+      name: 'Spray Roses',
+      emoji: '🌸',
+      tagline: 'Multi-bloom stems — each stem has about 3 roses.',
+      description: 'Spray roses are multi-headed — each stem carries about 3 blooms, giving you a fuller look for less. Great for arrangements and events.',
+      basePrice: 0,
+      stemOptions: STEM_OPTIONS,
+      colors: [
+        { id: 'white',    label: 'Pure White',   hex: '#F5F0EB',  emoji: '🤍' },
+        { id: 'pink',     label: 'Blush Pink',   hex: '#D4748A',  emoji: '🌸' },
+        { id: 'peach',    label: 'Soft Peach',   hex: '#E8A87C',  emoji: '🍑' },
+        { id: 'yellow',   label: 'Soft Yellow',  hex: '#E8C94F',  emoji: '🌼' },
+        { id: 'mixed',    label: 'Mixed',        hex: 'linear-gradient(135deg,#F5F0EB 0%,#D4748A 35%,#E8A87C 65%,#E8C94F 100%)', emoji: '💐' },
+        { id: 'surprise', label: 'Surprise Me',  hex: '#7A9E8E',  emoji: '🪷' },
+      ],
+      addOns: ADDONS,
+    },
   ];
 
   // =============================================
@@ -1167,7 +1212,3 @@
   </script>
 </body>
 </html>
-<<<<<<< HEAD
-=======
-
->>>>>>> cb15bc9441115065804e7828526c277084cb5e7f
