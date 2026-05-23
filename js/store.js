@@ -9,9 +9,9 @@ const PRODUCTS = {
     description: 'Hand-wrapped, seasonally sourced roses — made just for you. Every bouquet is arranged with fresh stems from Potomac Floral Wholesale and wrapped in kraft paper with ribbon.',
     basePrice: 0,
     stemOptions: [
-      { id: 'mini',     label: 'Mini',     stems: 6,  price: 35, desc: 'Perfect for a desk, a gift, or just because.' },
-      { id: 'standard', label: 'Standard', stems: 10, price: 55, desc: 'Our most popular. Hand-wrapped in kraft paper with ribbon.', popular: true },
-      { id: 'premium',  label: 'Premium',  stems: 15, price: 85, desc: 'The full From The Garden experience. Seasonal foliage included.' },
+      { id: 'mini',     label: 'Mini',     stems: 6-8,  price: 35, desc: 'Perfect for a desk, a gift, or just because.' },
+      { id: 'standard', label: 'Standard', stems: 10-12, price: 55, desc: 'Our most popular. Hand-wrapped in kraft paper with ribbon.', popular: true },
+      { id: 'premium',  label: 'Premium',  stems: 15-18, price: 85, desc: 'The full From The Garden experience. Seasonal foliage included.' },
     ],
     colors: [
       { id: 'red',    label: 'Classic Red',  hex: '#C0392B' },
