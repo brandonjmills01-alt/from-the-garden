@@ -99,6 +99,7 @@
       position:absolute;inset:0;
       pointer-events:none;
       overflow:hidden;
+      z-index:1;
     }
     .vp-rose{
       position:absolute;
@@ -116,9 +117,18 @@
       transform:translate(-50%,-50%) scale(1) rotate(var(--r,0deg));
     }
     .vp-center{
-      position:relative;z-index:2;
+      position:relative;z-index:3;
       text-align:center;padding:24px;
       pointer-events:none;
+      /* Frosted dark backdrop so text is always readable */
+      background:radial-gradient(ellipse 85% 75% at 50% 50%, rgba(26,26,26,0.72) 30%, transparent 100%);
+      border-radius:50%;
+      width:260px;
+      min-height:180px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
     }
     .vp-main-emoji{
       font-size:4.5rem;display:block;line-height:1;
@@ -355,7 +365,7 @@
       .vp-stem-count{font-size:2.8rem}
       .vp-price{font-size:1.7rem}
       .vp-product-name{font-size:0.88rem}
-      .vp-center{padding:14px}
+      .vp-center{padding:10px;width:220px;min-height:150px}
       .vp-addon-badge{font-size:0.52rem;padding:3px 7px}
       .vp-stem-label{font-size:0.55rem;margin-bottom:8px}
 
@@ -388,7 +398,7 @@
       .vp-main-emoji{font-size:2.4rem}
       .vp-stem-count{font-size:2.2rem}
       .vp-price{font-size:1.4rem}
-      .vp-center{padding:10px}
+      .vp-center{padding:8px;width:190px;min-height:130px}
 
       .builder-form{padding:18px 14px}
       .builder-product-name{font-size:1.7rem}
