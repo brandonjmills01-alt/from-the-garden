@@ -472,30 +472,6 @@ const ADDONS = [
 
 const PRODUCTS = [
   {
-    id:'classic_roses', name:'Classic Roses', emoji:'🌹',
-    tagline:'Fresh. Hand-wrapped. Built for the moment.',
-    description:'Our Classic Rose Bouquet is sourced directly through Potomac Floral Wholesale and assembled by hand — full-headed, long-stemmed, and exactly what a rose should be. Choose your color, your stem count, and how you want it wrapped.',
-    scarcity: null,
-    stemOptions:[
-      {id:'25',  label:'25 Stems',  stems:25,  price:80},
-      {id:'50',  label:'50 Stems',  stems:50,  price:155},
-      {id:'75',  label:'75 Stems',  stems:75,  price:225},
-      {id:'100', label:'100 Stems', stems:100, price:320},
-      {id:'150', label:'150 Stems', stems:150, price:445},
-      {id:'200', label:'200 Stems', stems:200, price:550},
-    ],
-    colors:[
-      {id:'red',      label:'Classic Red',  hex:'#C0392B', emoji:'🌹'},
-      {id:'white',    label:'Pure White',   hex:'#F5F0EB', emoji:'🤍'},
-      {id:'pink',     label:'Blush Pink',   hex:'#D4748A', emoji:'🌸'},
-      {id:'peach',    label:'Soft Peach',   hex:'#E8A87C', emoji:'🍑'},
-      {id:'lavender', label:'Lavender',     hex:'#C9A7D4', emoji:'💜'},
-      {id:'mixed',    label:'Mixed',        hex:'linear-gradient(135deg,#C0392B 0%,#D4748A 40%,#F5F0EB 70%,#E8C94F 100%)', emoji:'💐'},
-    ],
-    addOns: ADDONS,
-    bgColor:'rgba(192,57,43,0.18)',
-  },
-  {
     id:'spray_roses', name:'Spray Roses', emoji:'🌸',
     tagline:'One stem. Three blooms. Maximum impact.',
     description:'Spray roses are the secret weapon of the flower world — smaller than a classic rose, but clustered in a way that makes every bouquet look full, lush, and intentional. Each stem carries approximately 3 blooms.',
@@ -518,6 +494,30 @@ const PRODUCTS = [
     ],
     addOns: ADDONS,
     bgColor:'rgba(212,116,138,0.18)',
+  },
+  {
+    id:'classic_roses', name:'Classic Roses', emoji:'🌹',
+    tagline:'Fresh. Hand-wrapped. Built for the moment.',
+    description:'Our Classic Rose Bouquet is sourced directly through Potomac Floral Wholesale and assembled by hand — full-headed, long-stemmed, and exactly what a rose should be. Choose your color, your stem count, and how you want it wrapped.',
+    scarcity: null,
+    stemOptions:[
+      {id:'25',  label:'25 Stems',  stems:25,  price:80},
+      {id:'50',  label:'50 Stems',  stems:50,  price:155},
+      {id:'75',  label:'75 Stems',  stems:75,  price:225},
+      {id:'100', label:'100 Stems', stems:100, price:320},
+      {id:'150', label:'150 Stems', stems:150, price:445},
+      {id:'200', label:'200 Stems', stems:200, price:550},
+    ],
+    colors:[
+      {id:'red',      label:'Classic Red',  hex:'#C0392B', emoji:'🌹'},
+      {id:'white',    label:'Pure White',   hex:'#F5F0EB', emoji:'🤍'},
+      {id:'pink',     label:'Blush Pink',   hex:'#D4748A', emoji:'🌸'},
+      {id:'peach',    label:'Soft Peach',   hex:'#E8A87C', emoji:'🍑'},
+      {id:'lavender', label:'Lavender',     hex:'#C9A7D4', emoji:'💜'},
+      {id:'mixed',    label:'Mixed',        hex:'linear-gradient(135deg,#C0392B 0%,#D4748A 40%,#F5F0EB 70%,#E8C94F 100%)', emoji:'💐'},
+    ],
+    addOns: ADDONS,
+    bgColor:'rgba(192,57,43,0.18)',
   },
   {
     id:'sweetheart_roses', name:'Sweetheart Roses', emoji:'🩷',
