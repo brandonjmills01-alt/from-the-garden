@@ -644,20 +644,32 @@ const VP = {
   MAX_PARTICLES: 80,
   particles: [],
 
-  init() {
-    const container = document.getElementById('vp-roses');
-    container.innerHTML = '';
-    this.particles = [];
-    for (let i = 0; i < this.MAX_PARTICLES; i++) {
-      const el = document.createElement('span');
-      el.className = 'vp-rose';
-      // Random fixed positions across the panel
-      const x = 5 + Math.random() * 90;
-      const y = 5 + Math.random() * 90;
-      const r = (Math.random() * 40 - 20) + 'deg';
-      el.style.cssText = `left:${x}%;top:${y}%;--r:${r}`;
-      container.appendChild(el);
-      this.particles.push(el);
+init() {
+  const container = document.getElementById('vp-roses');
+  container.innerHTML = '';
+  this.particles = [];
+
+  // Grid-based placement so flowers don't overlap
+  const cols = 6;
+  const rows = Math.ceil(this.MAX_PARTICLES / cols);
+  const cellW = 100 / cols;
+  const cellH = 100 / rows;
+
+  for (let i = 0; i < this.MAX_PARTICLES; i++) {
+    const el = document.createElement('span');
+    el.className = 'vp-rose';
+
+    const col = i % cols;
+    const row = Math.floor(i / cols);
+
+    // Center of each cell + small random nudge so it doesn't look robotic
+    const x = (col * cellW) + (cellW / 2) + (Math.random() * 8 - 4);
+    const y = (row * cellH) + (cellH / 2) + (Math.random() * 8 - 4);
+    const r = (Math.random() * 30 - 15) + 'deg';
+
+    el.style.cssText = `left:${x}%;top:${y}%;--r:${r}`;
+    container.appendChild(el);
+    this.particles.push(el);
     }
   },
 
