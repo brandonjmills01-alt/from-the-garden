@@ -212,24 +212,18 @@
     }
     .vp-addon-badge.visible{transform:translateY(0);opacity:1}
 
-    /* Vase selector */
-    .vase-extra{ background:var(--cream-dark); border-color:var(--light-grey); }
-    .vase-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-top:4px; }
-    .vase-opt{
-      display:flex;flex-direction:column;align-items:center;
-      padding:14px 10px;
-      background:var(--white);
-      border:2px solid transparent;
-      cursor:pointer;
-      transition:all 0.18s;
-      text-align:center;
+    /* Vases coming soon */
+    .vases-coming-soon{
+      display:flex;align-items:center;gap:12px;
+      padding:13px 15px;
+      border:1.5px dashed var(--light-grey);
+      background:var(--cream);
+      margin-top:6px;
+      opacity:0.65;
     }
-    .vase-opt:hover{ border-color:var(--blush-light); }
-    .vase-opt.selected{ border-color:var(--blush); background:var(--blush-pale); }
-    .vase-icon{ font-size:2rem; margin-bottom:8px; }
-    .vase-name{ font-size:0.75rem; font-weight:600; color:var(--near-black); margin-bottom:4px; }
-    .vase-desc{ font-size:0.68rem; color:var(--mid-grey); line-height:1.4; margin-bottom:6px; }
-    .vase-price{ font-family:var(--font-display); font-size:1rem; color:var(--blush); }
+    .vcs-icon{font-size:1.3rem}
+    .vcs-label{font-size:0.88rem;font-weight:600;color:var(--near-black)}
+    .vcs-sub{font-size:0.72rem;color:var(--mid-grey);letter-spacing:0.06em}
 
     /* Add-on extra input fields */
     .addon-extra{
@@ -605,17 +599,10 @@ const ADDONS = [
   { id:'babiesbreath', label:"Baby's Breath Initial", price:15, desc:"Baby's breath shaped into an initial", badge:'🌿 Initial' },
   { id:'calligraphy',  label:'Custom Calligraphy Note', price:18, desc:'Handwritten note, up to 500 characters', badge:'✍️ Note' },
   { id:'flowerbox',    label:'Flower Box', price:30, desc:'Premium flower box packaging', badge:'📦 Box' },
-  { id:'vase',         label:'Add a Vase', price:0, desc:'Choose from three vase styles', badge:'🏺 Vase' },
-];
-
-const VASES = [
-  { id:'vase_clear',   label:'Clear Bud Vase',    price:12, desc:'Sleek and minimal. Lets the flowers speak.',  icon:'🫙' },
-  { id:'vase_amber',   label:'Amber Glass Vase',  price:16, desc:'Warm-toned glass. Earthy and elegant.',       icon:'🟫' },
-  { id:'vase_ceramic', label:'White Ceramic Vase', price:20, desc:'Clean matte finish. Modern and polished.',   icon:'⬜' },
 ];
 
 const PRODUCTS = [
-  {
+   {
     id:'classic_roses', name:'Classic Roses', emoji:'🌹',
     tagline:'Fresh. Hand-wrapped. Built for the moment.',
     description:'Our Classic Rose Bouquet is sourced directly through Potomac Floral Wholesale and assembled by hand — full-headed, long-stemmed, and exactly what a rose should be.',
@@ -637,7 +624,7 @@ const PRODUCTS = [
     ],
     addOns:ADDONS, bgColor:'rgba(192,57,43,0.2)',
   },
-   {
+  {
     id:'sweetheart_roses', name:'Sweetheart Roses', emoji:'🩷',
     tagline:'Small stem. Big feeling.',
     description:'Sweetheart roses are the most delicate member of the rose family — petite, tightly budded, and endlessly elegant. They carry the same richness as a classic rose in a softer, more refined form.',
@@ -659,7 +646,7 @@ const PRODUCTS = [
     ],
     addOns:ADDONS, bgColor:'rgba(244,167,185,0.2)',
   },
-  {
+   {
     id:'spray_roses', name:'Spray Roses', emoji:'🌸',
     tagline:'One stem. Three blooms. Maximum impact.',
     description:'Spray roses are the secret weapon of the flower world — smaller than a classic rose, but clustered in a way that makes every bouquet look full, lush, and intentional. Each stem carries approximately 3 blooms.',
@@ -713,7 +700,7 @@ let selectedAddOns = new Set();
 
 // ── VISUAL PANEL ───────────────────────────────────────
 const VP = {
-  MAX_PARTICLES: 120,
+  MAX_PARTICLES: 40,
   particles: [],
 
   init() {
@@ -855,7 +842,6 @@ const VP = {
     let total = 0;
     if (selectedStem) total += activeProduct.stemOptions.find(s => s.id === selectedStem).price;
     selectedAddOns.forEach(id => {
-      if (id === 'vase') { total += getVasePrice(); return; }
       const ao = activeProduct.addOns.find(a => a.id === id);
       if (ao) total += ao.price;
     });
@@ -992,20 +978,6 @@ function renderBuilder() {
             <label>Which letter initial?</label>
             <input type="text" maxlength="1" placeholder="e.g. A" id="input-babiesbreath" oninput="this.value=this.value.toUpperCase().replace(/[^A-Z]/,'')" />
           </div>` : ''}
-          ${a.id === 'vase' ? `
-          <div class="addon-extra vase-extra" id="extra-vase" style="display:none;">
-            <label>Choose your vase style</label>
-            <div class="vase-grid">
-              ${VASES.map(v => `
-                <div class="vase-opt" data-id="${v.id}" onclick="selectVase('${v.id}')">
-                  <div class="vase-icon">${v.icon}</div>
-                  <div class="vase-name">${v.label}</div>
-                  <div class="vase-desc">${v.desc}</div>
-                  <div class="vase-price">+$${v.price}</div>
-                </div>
-              `).join('')}
-            </div>
-          </div>` : ''}
           ${a.id === 'calligraphy' ? `
           <div class="addon-extra" id="extra-calligraphy" style="display:none;">
             <label>What should the note say? <span style="font-weight:400;text-transform:none;letter-spacing:0;">(max 500 characters)</span></label>
@@ -1013,6 +985,14 @@ function renderBuilder() {
             <div style="font-size:0.65rem;color:var(--sage);margin-top:5px;text-align:right;"><span id="calligraphy-count">500</span> characters remaining</div>
           </div>` : ''}
         `).join('')}
+      </div>
+    </div>
+
+    <div class="vases-coming-soon">
+      <span class="vcs-icon">🏺</span>
+      <div>
+        <div class="vcs-label">Vases</div>
+        <div class="vcs-sub">Coming soon</div>
       </div>
     </div>
 
@@ -1040,35 +1020,15 @@ function selectColor(id) {
   clearError();
 }
 
-let selectedVase = null;
-
-function selectVase(id) {
-  selectedVase = id;
-  document.querySelectorAll('.vase-opt').forEach(el =>
-    el.classList.toggle('selected', el.dataset.id === id)
-  );
-  // Update the addon price display dynamically
-  const v = VASES.find(v => v.id === id);
-  VP.updatePrice();
-}
-
-function getVasePrice() {
-  if (!selectedAddOns.has('vase') || !selectedVase) return 0;
-  const v = VASES.find(v => v.id === selectedVase);
-  return v ? v.price : 0;
-}
-
 function toggleAddOn(id) {
   selectedAddOns.has(id) ? selectedAddOns.delete(id) : selectedAddOns.add(id);
-  // If unchecking vase, clear selection
-  if (id === 'vase' && !selectedAddOns.has('vase')) selectedVase = null;
   document.querySelectorAll('.addon-opt').forEach(el => {
     const on = selectedAddOns.has(el.dataset.id);
     el.classList.toggle('selected', on);
     el.querySelector('.addon-check').textContent = on ? '✓' : '';
   });
   // Show/hide extra input fields
-  ['babiesbreath','calligraphy','vase'].forEach(aid => {
+  ['babiesbreath','calligraphy'].forEach(aid => {
     const extraEl = document.getElementById('extra-' + aid);
     if (extraEl) extraEl.style.display = selectedAddOns.has(aid) ? 'block' : 'none';
   });
@@ -1102,16 +1062,6 @@ function handleAddToCart() {
   const noteInput    = document.getElementById('input-calligraphy');
   const initialVal   = (selectedAddOns.has('babiesbreath') && initialInput) ? initialInput.value.trim() : '';
   const noteVal      = (selectedAddOns.has('calligraphy')  && noteInput)    ? noteInput.value.trim()    : '';
-  const vaseObj      = selectedVase ? VASES.find(v => v.id === selectedVase) : null;
-
-  // Recalculate total including variable vase price
-  const realTotal = stem.price
-    + Array.from(selectedAddOns).reduce((sum, id) => {
-        if (id === 'vase') return sum + getVasePrice();
-        const ao = p.addOns.find(a => a.id === id);
-        return sum + (ao ? ao.price : 0);
-      }, 0);
-
   cart.push({
     id: Date.now(),
     productId: p.id, productName: p.name,
@@ -1120,8 +1070,7 @@ function handleAddToCart() {
     addOns: Array.from(selectedAddOns),
     initialLetter: initialVal,
     calligraphyNote: noteVal,
-    vaseLabel: vaseObj ? vaseObj.label : '',
-    unitPrice: realTotal, qty: 1,
+    unitPrice: stem.price + aoTotal, qty: 1,
   });
 
   saveCart();
