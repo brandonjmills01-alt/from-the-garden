@@ -248,7 +248,7 @@
     .addon-extra input:focus, .addon-extra textarea:focus{
       border-color:var(--sage);
     }
-    .addon-extra input[maxlength="1"]{
+    .addon-extra input[maxlength="4"]{
       width:64px;text-align:center;font-size:1.4rem;
       font-family:var(--font-display);letter-spacing:0.1em;
     }
@@ -663,11 +663,11 @@ const PRODUCTS = [
     description:'Our Classic Rose Bouquet is sourced directly through Potomac Floral Wholesale and assembled by hand — full-headed, long-stemmed, and exactly what a rose should be.',
     scarcity:null,
     stemOptions:[
-      {id:'10',  label:'10 Stems',  stems:10,  price:35},
-      {id:'20',  label:'20 Stems',  stems:20,  price:65},
-      {id:'30',  label:'30 Stems',  stems:30,  price:95},
-      {id:'40',  label:'40 Stems',  stems:40,  price:125},
-      {id:'50',  label:'50 Stems',  stems:50,  price:155},
+      {id:'12',  label:'12 Stems',  stems:12,  price:35},
+      {id:'25',  label:'25 Stems',  stems:25,  price:65},
+      {id:'50',  label:'50 Stems',  stems:50,  price:95},
+      {id:'75',  label:'75 Stems',  stems:75,  price:125},
+      {id:'100', label:'100 Stems', stems:100, price:155},
     ],
     colors:[
       {id:'red',      label:'Classic Red',  hex:'#C0392B', emoji:'🌹'},
@@ -685,11 +685,11 @@ const PRODUCTS = [
     description:'Sweetheart roses are the most delicate member of the rose family — petite, tightly budded, and endlessly elegant. They carry the same richness as a classic rose in a softer, more refined form.',
     scarcity:null,
     stemOptions:[
-      {id:'10',  label:'10 Stems',  stems:10,  price:45},
-      {id:'20',  label:'20 Stems',  stems:20,  price:85},
-      {id:'30',  label:'30 Stems',  stems:30,  price:125},
-      {id:'40',  label:'40 Stems',  stems:40,  price:165},
-      {id:'50',  label:'50 Stems',  stems:50,  price:230},
+      {id:'12',  label:'12 Stems',  stems:12,  price:45},
+      {id:'25',  label:'25 Stems',  stems:25,  price:85},
+      {id:'50',  label:'50 Stems',  stems:50,  price:125},
+      {id:'75',  label:'75 Stems',  stems:75,  price:165},
+      {id:'100', label:'100 Stems', stems:100, price:230},
     ],
     colors:[
       {id:'red',      label:'Classic Red', hex:'#C0392B', emoji:'🌹'},
@@ -1031,7 +1031,7 @@ function renderBuilder() {
           ${a.id === 'babiesbreath' ? `
           <div class="addon-extra" id="extra-babiesbreath" style="display:none;">
             <label>Which letter initial?</label>
-            <input type="text" maxlength="1" placeholder="e.g. A" id="input-babiesbreath" oninput="this.value=this.value.toUpperCase().replace(/[^A-Z]/,'')" />
+            <input type="text" maxlength="1" placeholder="e.g. A" id="input-babiesbreath" oninput="" />
           </div>` : ''}
           ${a.id === 'calligraphy' ? `
           <div class="addon-extra" id="extra-calligraphy" style="display:none;">
