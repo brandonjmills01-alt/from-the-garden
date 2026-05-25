@@ -16,15 +16,24 @@
       --white:#ffffff;
       --font-display:'Cormorant Garamond',Georgia,serif;
       --font-body:'Jost',sans-serif;
+      --header-h:64px;
     }
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     html{scroll-behavior:smooth}
-    body{font-family:var(--font-body);background:var(--cream);color:var(--near-black);-webkit-font-smoothing:antialiased}
+    body{font-family:var(--font-body);background:var(--cream);color:var(--near-black);-webkit-font-smoothing:antialiased;overflow-x:hidden}
     a{color:inherit;text-decoration:none}
     button{cursor:pointer;font-family:var(--font-body)}
 
-    /* HEADER */
-    header{background:var(--cream);border-bottom:1px solid var(--cream-dark);padding:0 32px;height:64px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;transition:box-shadow 0.3s}
+    /* ── HEADER ── */
+    header{
+      background:var(--cream);
+      border-bottom:1px solid var(--cream-dark);
+      padding:0 32px;
+      height:var(--header-h);
+      display:flex;align-items:center;justify-content:space-between;
+      position:sticky;top:0;z-index:100;
+      transition:box-shadow 0.3s;
+    }
     header.scrolled{box-shadow:0 2px 20px rgba(0,0,0,0.07)}
     .header-logo{font-family:var(--font-display);font-size:1.3rem;font-weight:500}
     .header-logo span{color:var(--blush)}
@@ -35,21 +44,21 @@
     .cart-btn:hover{border-color:var(--blush)}
     #cart-count{background:var(--blush);color:var(--white);font-size:0.6rem;font-weight:700;width:18px;height:18px;border-radius:50%;display:none;align-items:center;justify-content:center}
 
-    /* STORE */
+    /* ── STORE WRAPPER ── */
     .store{width:100%}
+
+    /* ── CATALOG ── */
     #catalog-view{max-width:1200px;margin:0 auto;padding:0 24px 80px}
     .store-header{padding:48px 0 36px;border-bottom:1px solid var(--cream-dark);margin-bottom:40px}
     .store-header .eyebrow{font-size:0.68rem;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--blush);margin-bottom:12px}
     .store-header h1{font-family:var(--font-display);font-size:clamp(2rem,5vw,3.2rem);font-weight:500;font-style:italic;line-height:1.1}
     .store-header h1 em{font-style:normal;color:var(--blush)}
     .store-header p{color:var(--mid-grey);margin-top:12px;max-width:480px;font-size:0.95rem;line-height:1.7}
-
-    /* CATALOG */
     .product-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:2px}
     .product-card{background:var(--cream-dark);cursor:pointer;transition:background 0.2s;overflow:hidden}
     .product-card:hover{background:#ede5dc}
     .product-card-visual{height:200px;background:var(--near-black);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
-    .product-card-visual-bg{position:absolute;inset:0;transition:background 0.6s ease}
+    .product-card-visual-bg{position:absolute;inset:0}
     .product-card-emoji{font-size:4.5rem;position:relative;z-index:1;filter:drop-shadow(0 4px 16px rgba(0,0,0,0.4));transition:transform 0.3s cubic-bezier(0.34,1.56,0.64,1)}
     .product-card:hover .product-card-emoji{transform:scale(1.1)}
     .product-card-body{padding:24px 26px 28px}
@@ -60,342 +69,305 @@
     .product-card-price small{font-size:0.73rem;color:var(--mid-grey);font-family:var(--font-body)}
     .product-card-cta{font-size:0.68rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--blush)}
 
-    /* BUILDER */
+    /* ── BUILDER WRAPPER ── */
     #builder-view{display:none}
-    .builder-back{display:inline-flex;align-items:center;gap:8px;font-size:0.72rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--mid-grey);padding:20px 24px;background:var(--cream);border:none;border-bottom:1px solid var(--cream-dark);width:100%;transition:color 0.2s}
+    .builder-back{
+      display:flex;align-items:center;gap:8px;
+      font-size:0.72rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;
+      color:var(--mid-grey);padding:18px 28px;
+      background:var(--cream);border:none;border-bottom:1px solid var(--cream-dark);
+      width:100%;transition:color 0.2s;
+    }
     .builder-back:hover{color:var(--near-black)}
-    .builder-layout{display:grid;grid-template-columns:1fr 1fr;gap:0;border:none;width:100%}
+    .builder-layout{display:grid;grid-template-columns:1fr 1fr;width:100%}
 
     /* ── VISUAL PANEL ── */
     .builder-visual{
       position:sticky;
-      top:64px;
-      height:calc(100vh - 64px);
-      background:var(--near-black);
+      top:var(--header-h);
+      height:calc(100vh - var(--header-h));
+      background:#1a1a1a;
       display:flex;align-items:center;justify-content:center;
       overflow:hidden;
-      flex-shrink:0;
     }
-
-    /* Animated background layer */
     .vp-bg{
       position:absolute;inset:0;
-      transition:background 0.7s ease;
-      background:var(--near-black);
+      transition:background 0.8s ease;
+      background:#1a1a1a;
     }
-
-    /* Rose particles container */
     .vp-roses{
       position:absolute;inset:0;
       pointer-events:none;
       overflow:hidden;
     }
-
     .vp-rose{
       position:absolute;
       font-size:2rem;
+      line-height:1;
       opacity:0;
-      transform:translate(-50%,-50%) scale(0) rotate(var(--r));
-      transition:opacity 0.2s ease, transform 0.2s cubic-bezier(0.34,1.56,0.64,1);
+      transform:translate(-50%,-50%) scale(0) rotate(var(--r,0deg));
+      transition:opacity 0.18s ease, transform 0.18s cubic-bezier(0.34,1.56,0.64,1);
       filter:drop-shadow(0 2px 8px rgba(0,0,0,0.5));
       will-change:transform,opacity;
+      user-select:none;
     }
     .vp-rose.visible{
       opacity:1;
-      transform:translate(-50%,-50%) scale(1) rotate(var(--r));
+      transform:translate(-50%,-50%) scale(1) rotate(var(--r,0deg));
     }
-
-    /* Center content */
     .vp-center{
       position:relative;z-index:2;
-      text-align:center;
-      padding:32px;
+      text-align:center;padding:24px;
       pointer-events:none;
     }
-
     .vp-main-emoji{
-      font-size:5rem;
-      display:block;
-      line-height:1;
-      margin-bottom:20px;
+      font-size:4.5rem;display:block;line-height:1;
+      margin-bottom:16px;
       filter:drop-shadow(0 8px 32px rgba(0,0,0,0.6));
-      transition:transform 0.5s cubic-bezier(0.34,1.56,0.64,1), font-size 0.4s ease;
-      position:relative;z-index:2;
+      transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
     }
-
     .vp-product-name{
-      font-family:var(--font-display);
-      font-size:1.3rem;font-style:italic;
-      color:rgba(255,255,255,0.7);
-      margin-bottom:8px;
-      transition:opacity 0.3s;
+      font-family:var(--font-display);font-size:1.1rem;font-style:italic;
+      color:rgba(255,255,255,0.6);margin-bottom:6px;
     }
-
     .vp-stem-count{
-      font-family:var(--font-display);
-      font-size:5rem;font-weight:300;
-      color:var(--white);
-      line-height:1;
-      margin-bottom:4px;
-      transition:all 0.4s cubic-bezier(0.34,1.56,0.64,1);
-      position:relative;z-index:2;
+      font-family:var(--font-display);font-size:4.5rem;font-weight:300;
+      color:var(--white);line-height:1;margin-bottom:2px;
     }
-    .vp-stem-count.bump{animation:bump 0.4s cubic-bezier(0.34,1.56,0.64,1)}
-    @keyframes bump{0%{transform:scale(1)}50%{transform:scale(1.2)}100%{transform:scale(1)}}
-
+    .vp-stem-count.bump{animation:bump 0.35s cubic-bezier(0.34,1.56,0.64,1)}
+    @keyframes bump{0%{transform:scale(1)}50%{transform:scale(1.18)}100%{transform:scale(1)}}
     .vp-stem-label{
-      font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;
-      color:rgba(255,255,255,0.35);margin-bottom:20px;
+      font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;
+      color:rgba(255,255,255,0.3);margin-bottom:14px;
     }
-
     .vp-price{
-      font-family:var(--font-display);
-      font-size:2.8rem;font-weight:300;
+      font-family:var(--font-display);font-size:2.4rem;font-weight:300;
       color:var(--white);line-height:1;
-      transition:all 0.35s ease;
-      position:relative;z-index:2;
+      transition:all 0.3s ease;
     }
-    .vp-price sup{font-size:1.1rem;color:var(--blush-light);vertical-align:super}
-    .vp-price.changed{animation:pricePop 0.35s ease}
+    .vp-price sup{font-size:1rem;color:var(--blush-light);vertical-align:super}
+    .vp-price.pop{animation:pricePop 0.3s ease}
     @keyframes pricePop{0%{transform:scale(1)}50%{transform:scale(1.08);color:var(--blush-light)}100%{transform:scale(1)}}
-
-    /* Add-on badges on visual */
     .vp-addons{
       display:flex;flex-wrap:wrap;justify-content:center;
-      gap:6px;margin-top:16px;min-height:28px;
-      position:relative;z-index:2;
+      gap:5px;margin-top:12px;min-height:24px;
     }
     .vp-addon-badge{
-      font-size:0.6rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;
-      padding:4px 10px;background:rgba(255,255,255,0.08);
-      border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.6);
-      transform:translateY(8px);opacity:0;
-      transition:all 0.3s cubic-bezier(0.34,1.56,0.64,1);
+      font-size:0.58rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;
+      padding:3px 9px;
+      background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);
+      color:rgba(255,255,255,0.55);
+      transform:translateY(6px);opacity:0;
+      transition:all 0.25s cubic-bezier(0.34,1.56,0.64,1);
     }
     .vp-addon-badge.visible{transform:translateY(0);opacity:1}
-
-    /* Color pulse ring */
     .vp-color-ring{
-      position:absolute;
-      width:200px;height:200px;
-      border-radius:50%;
-      opacity:0;
-      transform:scale(0.5);
-      transition:all 0.6s ease;
-      pointer-events:none;
-      z-index:1;
+      position:absolute;width:180px;height:180px;border-radius:50%;
+      opacity:0;transform:scale(0.5);pointer-events:none;z-index:1;
     }
-    .vp-color-ring.pulse{animation:ringPulse 0.7s ease forwards}
-    @keyframes ringPulse{0%{transform:scale(0.5);opacity:0.4}100%{transform:scale(2.5);opacity:0}}
+    .vp-color-ring.pulse{animation:ringPulse 0.6s ease forwards}
+    @keyframes ringPulse{0%{transform:scale(0.5);opacity:0.35}100%{transform:scale(2.8);opacity:0}}
 
-    /* BUILDER FORM */
-    .builder-form{padding:40px 44px;overflow-y:auto;height:calc(100vh - 64px);}
-    .builder-product-name{font-family:var(--font-display);font-size:2.2rem;font-weight:500;margin-bottom:6px}
-    .builder-product-desc{font-size:0.88rem;color:var(--mid-grey);line-height:1.65;margin-bottom:36px}
-    .section-label{font-size:0.68rem;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--near-black);margin-bottom:14px;display:flex;align-items:center;gap:12px}
+    /* ── BUILDER FORM ── */
+    .builder-form{
+      padding:36px 40px;
+      overflow-y:auto;
+      height:calc(100vh - var(--header-h));
+      border-left:1px solid var(--cream-dark);
+    }
+    .builder-product-name{font-family:var(--font-display);font-size:2rem;font-weight:500;margin-bottom:6px}
+    .builder-product-desc{font-size:0.87rem;color:var(--mid-grey);line-height:1.65;margin-bottom:28px}
+    .scarcity-note{background:rgba(201,162,39,0.08);border:1px solid rgba(201,162,39,0.2);padding:10px 14px;font-size:0.78rem;color:#7a5e00;line-height:1.5;margin-bottom:22px}
+    .section-label{font-size:0.65rem;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--near-black);margin-bottom:12px;display:flex;align-items:center;gap:10px}
     .section-label::after{content:'';flex:1;height:1px;background:var(--cream-dark)}
-    .builder-section{margin-bottom:32px}
+    .builder-section{margin-bottom:28px}
 
-    /* STEM OPTIONS */
-    .stem-options{display:flex;flex-direction:column;gap:7px}
-    .stem-opt{display:flex;align-items:center;gap:14px;padding:14px 16px;border:1.5px solid var(--cream-dark);background:var(--cream);cursor:pointer;transition:all 0.18s ease;user-select:none}
+    /* Stem options */
+    .stem-options{display:flex;flex-direction:column;gap:6px}
+    .stem-opt{display:flex;align-items:center;gap:12px;padding:13px 15px;border:1.5px solid var(--cream-dark);background:var(--cream);cursor:pointer;transition:all 0.15s ease;user-select:none}
     .stem-opt:hover{border-color:var(--blush-light);background:#fdf8f5}
     .stem-opt.selected{border-color:var(--blush);background:var(--blush-pale)}
-    .stem-radio{width:16px;height:16px;border:2px solid var(--light-grey);border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all 0.18s}
+    .stem-radio{width:16px;height:16px;border:2px solid var(--light-grey);border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all 0.15s}
     .stem-opt.selected .stem-radio{border-color:var(--blush);background:var(--blush)}
     .stem-opt.selected .stem-radio::after{content:'';width:5px;height:5px;border-radius:50%;background:var(--white)}
     .stem-info{flex:1}
-    .stem-name{font-weight:600;font-size:0.88rem;display:flex;align-items:center;gap:8px}
-    .stem-count-label{font-size:0.76rem;color:var(--mid-grey);margin-top:2px}
-    .stem-price{font-family:var(--font-display);font-size:1.25rem;flex-shrink:0}
+    .stem-name{font-weight:600;font-size:0.87rem;display:flex;align-items:center;gap:8px}
+    .stem-note{font-weight:400;color:var(--mid-grey);font-size:0.74rem}
+    .stem-price{font-family:var(--font-display);font-size:1.2rem;flex-shrink:0}
 
-    /* COLOR */
+    /* Colors */
     .color-grid{display:flex;flex-wrap:wrap;gap:10px}
-    .color-opt{display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;user-select:none}
-    .color-swatch{width:40px;height:40px;border:2px solid transparent;outline:2px solid transparent;outline-offset:2px;transition:all 0.18s}
+    .color-opt{display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;user-select:none}
+    .color-swatch{width:40px;height:40px;border:2px solid transparent;outline:2px solid transparent;outline-offset:2px;transition:all 0.15s}
     .color-opt.selected .color-swatch{border-color:var(--white);outline-color:var(--blush)}
-    .color-name{font-size:0.63rem;font-weight:500;color:var(--mid-grey);text-align:center;max-width:48px;line-height:1.3}
+    .color-name{font-size:0.62rem;font-weight:500;color:var(--mid-grey);text-align:center;max-width:46px;line-height:1.3}
     .color-opt.selected .color-name{color:var(--near-black);font-weight:600}
 
-    /* ADD-ONS */
-    .addon-list{display:flex;flex-direction:column;gap:7px}
-    .addon-opt{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1.5px solid var(--cream-dark);background:var(--cream);cursor:pointer;transition:all 0.18s;user-select:none}
+    /* Add-ons */
+    .addon-list{display:flex;flex-direction:column;gap:6px}
+    .addon-opt{display:flex;align-items:center;gap:11px;padding:11px 13px;border:1.5px solid var(--cream-dark);background:var(--cream);cursor:pointer;transition:all 0.15s;user-select:none}
     .addon-opt:hover{border-color:var(--sage-pale)}
     .addon-opt.selected{border-color:var(--sage);background:var(--sage-pale)}
-    .addon-check{width:16px;height:16px;border:2px solid var(--light-grey);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:0.58rem;color:var(--white);transition:all 0.18s}
+    .addon-check{width:16px;height:16px;border:2px solid var(--light-grey);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:0.56rem;color:var(--white);transition:all 0.15s}
     .addon-opt.selected .addon-check{border-color:var(--sage);background:var(--sage)}
     .addon-info{flex:1}
-    .addon-name{font-size:0.86rem;font-weight:600}
-    .addon-desc{font-size:0.73rem;color:var(--mid-grey);margin-top:1px}
-    .addon-price{font-family:var(--font-display);font-size:0.98rem;flex-shrink:0;color:var(--mid-grey)}
+    .addon-name{font-size:0.85rem;font-weight:600}
+    .addon-desc{font-size:0.72rem;color:var(--mid-grey);margin-top:1px}
+    .addon-price{font-family:var(--font-display);font-size:0.95rem;flex-shrink:0;color:var(--mid-grey)}
 
     /* CTA */
-    .builder-cta{border-top:1px solid var(--cream-dark);padding-top:28px;margin-top:32px}
-    .builder-total-row{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:18px}
-    .builder-total-label{font-size:0.7rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--mid-grey)}
-    .builder-total-price{font-family:var(--font-display);font-size:2.6rem;line-height:1;transition:all 0.3s ease}
-    .builder-total-price sup{font-size:1rem;color:var(--mid-grey);vertical-align:super}
-    .add-to-cart-btn{width:100%;padding:17px;background:var(--blush);color:var(--white);border:none;font-size:0.8rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;transition:background 0.2s,transform 0.2s}
+    .builder-cta{border-top:1px solid var(--cream-dark);padding-top:24px;margin-top:28px}
+    .builder-total-row{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:16px}
+    .builder-total-label{font-size:0.68rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--mid-grey)}
+    .builder-total-price{font-family:var(--font-display);font-size:2.4rem;line-height:1}
+    .builder-total-price sup{font-size:0.95rem;color:var(--mid-grey);vertical-align:super}
+    .add-to-cart-btn{width:100%;padding:16px;background:var(--blush);color:var(--white);border:none;font-size:0.8rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;transition:background 0.2s,transform 0.2s}
     .add-to-cart-btn:hover{background:#c05e75;transform:translateY(-1px)}
-    .builder-error{font-size:0.76rem;color:var(--blush);margin-top:10px;min-height:18px;font-weight:500}
+    .builder-error{font-size:0.76rem;color:var(--blush);margin-top:8px;min-height:16px;font-weight:500}
 
-    /* SCARCITY NOTE */
-    .scarcity-note{background:rgba(201,162,39,0.08);border:1px solid rgba(201,162,39,0.2);padding:10px 14px;font-size:0.78rem;color:#8a6d00;line-height:1.5;margin-bottom:24px}
-
-    /* CART */
+    /* ── CART ── */
     #cart-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:200;opacity:0;pointer-events:none;transition:opacity 0.3s}
     #cart-overlay.open{opacity:1;pointer-events:all}
-    #cart-drawer{position:fixed;top:0;right:0;width:400px;max-width:95vw;height:100vh;background:var(--cream);z-index:201;display:flex;flex-direction:column;transform:translateX(100%);transition:transform 0.32s cubic-bezier(0.25,0.46,0.45,0.94);box-shadow:-6px 0 32px rgba(0,0,0,0.1)}
+    #cart-drawer{position:fixed;top:0;right:0;width:400px;max-width:95vw;height:100vh;background:var(--cream);z-index:201;display:flex;flex-direction:column;transform:translateX(100%);transition:transform 0.3s cubic-bezier(0.25,0.46,0.45,0.94);box-shadow:-6px 0 32px rgba(0,0,0,0.1)}
     #cart-drawer.open{transform:translateX(0)}
-    .drawer-header{display:flex;align-items:center;justify-content:space-between;padding:22px 26px;border-bottom:1px solid var(--cream-dark)}
-    .drawer-title{font-family:var(--font-display);font-size:1.35rem;font-weight:500}
+    .drawer-header{display:flex;align-items:center;justify-content:space-between;padding:20px 24px;border-bottom:1px solid var(--cream-dark)}
+    .drawer-title{font-family:var(--font-display);font-size:1.3rem;font-weight:500}
     .drawer-close{background:none;border:none;font-size:1rem;color:var(--mid-grey);padding:4px;transition:color 0.2s}
     .drawer-close:hover{color:var(--near-black)}
-    #drawer-body{flex:1;overflow-y:auto;padding:20px 26px}
+    #drawer-body{flex:1;overflow-y:auto;padding:18px 24px}
     .cart-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;height:200px;text-align:center}
     .cart-empty .icon{font-size:2.5rem}
     .cart-empty p{font-size:0.9rem;color:var(--mid-grey)}
     .cart-item{display:flex;align-items:flex-start;gap:12px;padding:14px 0;border-bottom:1px solid var(--cream-dark)}
     .cart-item-swatch{width:42px;height:42px;flex-shrink:0;border:1px solid rgba(0,0,0,0.08)}
     .cart-item-info{flex:1}
-    .cart-item-name{font-weight:600;font-size:0.88rem}
-    .cart-item-meta{font-size:0.77rem;color:var(--mid-grey);margin-top:2px}
-    .cart-item-addons{font-size:0.72rem;color:var(--sage);margin-top:2px}
+    .cart-item-name{font-weight:600;font-size:0.87rem}
+    .cart-item-meta{font-size:0.76rem;color:var(--mid-grey);margin-top:2px}
+    .cart-item-addons{font-size:0.71rem;color:var(--sage);margin-top:2px}
     .cart-item-right{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
     .cart-item-price{font-family:var(--font-display);font-size:1.1rem}
     .cart-item-remove{background:none;border:none;font-size:0.65rem;color:var(--light-grey);padding:2px;transition:color 0.2s}
     .cart-item-remove:hover{color:var(--blush)}
-    #drawer-footer{padding:20px 26px;border-top:1px solid var(--cream-dark)}
-    .drawer-total-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
-    .drawer-total-label{font-size:0.72rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase}
+    #drawer-footer{padding:18px 24px;border-top:1px solid var(--cream-dark)}
+    .drawer-total-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+    .drawer-total-label{font-size:0.7rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase}
     .drawer-total-value{font-family:var(--font-display);font-size:1.5rem}
-    .checkout-btn{width:100%;padding:15px;background:var(--near-black);color:var(--white);border:none;font-size:0.78rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;transition:background 0.2s}
+    .checkout-btn{width:100%;padding:14px;background:var(--near-black);color:var(--white);border:none;font-size:0.76rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;transition:background 0.2s}
     .checkout-btn:hover{background:#444}
-    .drawer-note{font-size:0.7rem;color:var(--mid-grey);text-align:center;margin-top:10px}
+    .drawer-note{font-size:0.68rem;color:var(--mid-grey);text-align:center;margin-top:9px}
 
-    /* CHECKOUT */
+    /* ── CHECKOUT ── */
     #checkout-view{display:none}
-    .checkout-layout{display:grid;grid-template-columns:1fr 380px;gap:0}
-    .checkout-form-panel{padding:48px 44px;border-right:1px solid var(--cream-dark)}
-    .checkout-form-panel h2{font-family:var(--font-display);font-size:2rem;font-style:italic;margin-bottom:36px}
+    .checkout-layout{display:grid;grid-template-columns:1fr 360px;gap:0}
+    .checkout-form-panel{padding:44px 40px;border-right:1px solid var(--cream-dark)}
+    .checkout-form-panel h2{font-family:var(--font-display);font-size:2rem;font-style:italic;margin-bottom:32px}
     .checkout-form-panel h2 em{font-style:normal;color:var(--blush)}
-    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-    .form-group{margin-bottom:20px}
-    .form-group label{display:block;font-size:0.68rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:7px}
-    .form-group input,.form-group select,.form-group textarea{width:100%;padding:13px 15px;background:var(--cream-dark);border:1.5px solid transparent;font-family:var(--font-body);font-size:0.92rem;color:var(--near-black);outline:none;transition:border-color 0.2s,background 0.2s;appearance:none}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .form-group{margin-bottom:18px}
+    .form-group label{display:block;font-size:0.66rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:6px}
+    .form-group input,.form-group select,.form-group textarea{width:100%;padding:12px 14px;background:var(--cream-dark);border:1.5px solid transparent;font-family:var(--font-body);font-size:0.92rem;color:var(--near-black);outline:none;transition:border-color 0.2s,background 0.2s;appearance:none}
     .form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--blush);background:var(--white)}
-    .form-group textarea{min-height:100px;resize:vertical}
-    .payment-placeholder{border:2px dashed var(--light-grey);padding:28px;text-align:center;margin:8px 0 24px}
-    .payment-placeholder .ph-icon{font-size:1.8rem;margin-bottom:10px}
-    .payment-placeholder p{font-size:0.83rem;color:var(--mid-grey);line-height:1.6}
-    .place-order-btn{width:100%;padding:17px;background:var(--blush);color:var(--white);border:none;font-size:0.8rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;transition:background 0.2s}
+    .form-group textarea{min-height:90px;resize:vertical}
+    .payment-placeholder{border:2px dashed var(--light-grey);padding:24px;text-align:center;margin:6px 0 20px}
+    .payment-placeholder .ph-icon{font-size:1.6rem;margin-bottom:8px}
+    .payment-placeholder p{font-size:0.82rem;color:var(--mid-grey);line-height:1.6}
+    .place-order-btn{width:100%;padding:16px;background:var(--blush);color:var(--white);border:none;font-size:0.8rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;transition:background 0.2s}
     .place-order-btn:hover{background:#c05e75}
-    .checkout-disclaimer{font-size:0.72rem;color:var(--mid-grey);text-align:center;margin-top:10px}
-    .checkout-summary-panel{padding:48px 36px;background:var(--cream-dark)}
-    .checkout-summary-panel h3{font-family:var(--font-display);font-size:1.3rem;margin-bottom:22px}
-    .summary-item{display:flex;gap:12px;padding:14px 0;border-bottom:1px solid rgba(0,0,0,0.07)}
-    .summary-swatch{width:46px;height:46px;flex-shrink:0;border:1px solid rgba(0,0,0,0.08)}
+    .checkout-disclaimer{font-size:0.7rem;color:var(--mid-grey);text-align:center;margin-top:9px}
+    .checkout-summary-panel{padding:44px 32px;background:var(--cream-dark)}
+    .checkout-summary-panel h3{font-family:var(--font-display);font-size:1.25rem;margin-bottom:20px}
+    .summary-item{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid rgba(0,0,0,0.07)}
+    .summary-swatch{width:44px;height:44px;flex-shrink:0;border:1px solid rgba(0,0,0,0.08)}
     .summary-info{flex:1}
-    .summary-name{font-weight:600;font-size:0.88rem}
-    .summary-meta{font-size:0.78rem;color:var(--mid-grey);margin-top:2px}
-    .summary-addons{font-size:0.72rem;color:var(--sage);margin-top:2px}
-    .summary-price{font-family:var(--font-display);font-size:1.1rem;flex-shrink:0}
-    .summary-totals{margin-top:20px}
-    .summary-row{display:flex;justify-content:space-between;padding:9px 0;font-size:0.88rem;border-bottom:1px solid rgba(0,0,0,0.06)}
-    .summary-row.grand{font-family:var(--font-display);font-size:1.4rem;border:none;padding-top:14px}
-    .summary-row.grand .label{font-family:var(--font-body);font-size:0.88rem;font-weight:600;align-self:center}
+    .summary-name{font-weight:600;font-size:0.87rem}
+    .summary-meta{font-size:0.76rem;color:var(--mid-grey);margin-top:2px}
+    .summary-addons{font-size:0.71rem;color:var(--sage);margin-top:2px}
+    .summary-price{font-family:var(--font-display);font-size:1.05rem;flex-shrink:0}
+    .summary-totals{margin-top:18px}
+    .summary-row{display:flex;justify-content:space-between;padding:8px 0;font-size:0.87rem;border-bottom:1px solid rgba(0,0,0,0.06)}
+    .summary-row.grand{font-family:var(--font-display);font-size:1.35rem;border:none;padding-top:12px}
+    .summary-row.grand .label{font-family:var(--font-body);font-size:0.87rem;font-weight:600;align-self:center}
 
-    /* CONFIRM */
+    /* ── CONFIRM ── */
     #confirm-view{display:none;min-height:60vh;align-items:center;justify-content:center;text-align:center;padding:80px 24px}
     .confirm-inner{max-width:440px;margin:0 auto}
-    .confirm-inner .icon{font-size:3.5rem;margin-bottom:24px}
-    .confirm-inner h2{font-family:var(--font-display);font-size:2.2rem;font-style:italic;margin-bottom:14px}
-    .confirm-inner p{font-size:0.95rem;color:var(--mid-grey);line-height:1.7;margin-bottom:32px}
+    .confirm-inner .icon{font-size:3.5rem;margin-bottom:20px}
+    .confirm-inner h2{font-family:var(--font-display);font-size:2.2rem;font-style:italic;margin-bottom:12px}
+    .confirm-inner p{font-size:0.93rem;color:var(--mid-grey);line-height:1.7;margin-bottom:28px}
     .confirm-back-btn{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;background:var(--blush);color:var(--white);border:none;font-size:0.78rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;transition:background 0.2s}
     .confirm-back-btn:hover{background:#c05e75}
 
-    /* TOAST */
-    #toast{position:fixed;bottom:28px;right:28px;background:var(--near-black);color:var(--white);padding:14px 18px;z-index:300;display:flex;align-items:center;gap:14px;min-width:240px;transform:translateY(16px);opacity:0;pointer-events:none;transition:all 0.28s ease}
+    /* ── TOAST ── */
+    #toast{position:fixed;bottom:24px;right:24px;background:var(--near-black);color:var(--white);padding:13px 17px;z-index:300;display:flex;align-items:center;gap:13px;min-width:230px;transform:translateY(14px);opacity:0;pointer-events:none;transition:all 0.26s ease}
     #toast.show{opacity:1;transform:translateY(0)}
-    .toast-label{font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--blush-light);margin-bottom:2px}
-    .toast-name{font-size:0.88rem;font-weight:500}
+    .toast-label{font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--blush-light);margin-bottom:2px}
+    .toast-name{font-size:0.87rem;font-weight:500}
     .toast-price{font-family:var(--font-display);font-size:1.1rem;color:var(--blush-light);margin-left:auto}
 
-    /* RESPONSIVE */
-    @media(max-width:860px){
-      /* Builder goes vertical on tablet/mobile */
-      .builder-layout{grid-template-columns:1fr;grid-template-rows:auto 1fr}
-      .builder-back{padding:16px 20px}
+    /* ── RESPONSIVE ── */
+    @media(max-width:900px){
+      .builder-layout{grid-template-columns:1fr}
 
-      /* Visual panel: fixed height, no sticky, visual effects still fire */
       .builder-visual{
         position:relative;top:0;
         height:260px;min-height:260px;
         flex-shrink:0;
       }
-      /* Shrink particles and center content for small panel */
-      .vp-rose{font-size:1.4rem} .vp-rose.visible{transform:translate(-50%,-50%) scale(1) rotate(var(--r))}
-      .vp-main-emoji{font-size:3.5rem;margin-bottom:12px}
+      .vp-rose{font-size:1.5rem}
+      .vp-main-emoji{font-size:3rem;margin-bottom:10px}
       .vp-stem-count{font-size:3rem}
-      .vp-price{font-size:2rem}
-      .vp-product-name{font-size:1rem}
-      .vp-center{padding:20px}
-      .vp-addon-badge{font-size:0.55rem;padding:3px 8px}
+      .vp-price{font-size:1.8rem}
+      .vp-product-name{font-size:0.95rem}
+      .vp-center{padding:16px}
 
-      /* Form scrolls naturally */
-      .builder-form{padding:28px 20px;overflow-y:visible;height:auto}
+      .builder-form{
+        padding:24px 20px;
+        overflow-y:visible;
+        height:auto;
+        border-left:none;
+        border-top:1px solid var(--cream-dark);
+      }
 
-      /* Checkout */
       .checkout-layout{grid-template-columns:1fr}
-      .checkout-summary-panel{border-top:1px solid var(--cream-dark);order:2}
+      .checkout-summary-panel{border-top:1px solid var(--cream-dark)}
       .checkout-form-panel{padding:28px 20px;border-right:none}
 
-      /* Product grid 2 columns on tablet */
       .product-grid{grid-template-columns:repeat(2,1fr)}
       #catalog-view{padding:0 16px 60px}
-      .store-header{padding:32px 0 28px}
+      .store-header{padding:32px 0 24px}
     }
 
-    @media(max-width:560px){
-      /* Header */
-      header{padding:0 16px;height:56px}
+    @media(max-width:540px){
+      :root{--header-h:56px}
+      header{padding:0 16px}
       .back-link{display:none}
 
-      /* Visual panel even shorter on phone */
-      .builder-visual{height:220px;min-height:220px}
-      .vp-main-emoji{font-size:2.8rem}
+      .builder-visual{height:200px;min-height:200px}
+      .vp-rose{font-size:1.2rem}
+      .vp-main-emoji{font-size:2.5rem}
       .vp-stem-count{font-size:2.4rem}
-      .vp-price{font-size:1.6rem}
-      .vp-rose{font-size:1.1rem} .vp-rose.visible{transform:translate(-50%,-50%) scale(1) rotate(var(--r))}
+      .vp-price{font-size:1.5rem}
+      .vp-center{padding:12px}
 
-      /* Stem options tighter */
-      .stem-opt{padding:12px 12px}
-      .stem-price{font-size:1.1rem}
+      .builder-form{padding:18px 14px}
+      .builder-product-name{font-size:1.7rem}
+      .builder-total-price{font-size:2rem}
+      .add-to-cart-btn{padding:15px;font-size:0.76rem}
 
-      /* Color swatches slightly smaller */
+      .stem-opt{padding:11px 12px}
+      .stem-price{font-size:1.05rem}
       .color-swatch{width:36px;height:36px}
-      .color-name{font-size:0.6rem;max-width:42px}
+      .color-name{font-size:0.6rem;max-width:40px}
 
-      /* Builder form */
-      .builder-form{padding:20px 16px}
-      .builder-product-name{font-size:1.8rem}
-      .builder-total-price{font-size:2.2rem}
-      .add-to-cart-btn{padding:16px;font-size:0.78rem}
-
-      /* Full-width product cards */
       .product-grid{grid-template-columns:1fr}
       #catalog-view{padding:0 12px 48px}
       .store-header h1{font-size:1.8rem}
 
-      /* Checkout */
       .form-row{grid-template-columns:1fr}
-      .checkout-form-panel{padding:20px 16px}
+      .checkout-form-panel{padding:18px 14px}
 
-      /* Cart drawer full width */
       #cart-drawer{width:100%;max-width:100%}
-
-      /* Confirm */
-      #confirm-view{padding:60px 16px}
+      #confirm-view{padding:60px 14px}
     }
   </style>
 </head>
@@ -471,14 +443,14 @@
       <div class="checkout-form-panel">
         <h2>Your <em>details.</em></h2>
         <form id="checkout-form" onsubmit="placeOrder(event)">
-          <div class="section-label" style="margin-bottom:20px;">Contact</div>
+          <div class="section-label" style="margin-bottom:18px;">Contact</div>
           <div class="form-row">
             <div class="form-group"><label>First Name</label><input type="text" placeholder="First name" required /></div>
             <div class="form-group"><label>Last Name</label><input type="text" placeholder="Last name" required /></div>
           </div>
           <div class="form-group"><label>Email</label><input type="email" placeholder="you@email.com" required /></div>
           <div class="form-group"><label>Phone (optional)</label><input type="tel" placeholder="(202) 000-0000" /></div>
-          <div class="section-label" style="margin-bottom:20px;margin-top:8px;">Fulfillment</div>
+          <div class="section-label" style="margin-bottom:18px;margin-top:6px;">Fulfillment</div>
           <div class="form-group">
             <label>Pickup or Delivery?</label>
             <select id="fulfill-select" onchange="toggleDelivery(this.value)">
@@ -495,9 +467,9 @@
             </div>
           </div>
           <div class="form-group"><label>Preferred Date</label><input type="date" required /></div>
-          <div class="section-label" style="margin-bottom:20px;margin-top:8px;">Notes</div>
+          <div class="section-label" style="margin-bottom:18px;margin-top:6px;">Notes</div>
           <div class="form-group"><label>Special Instructions (optional)</label><textarea placeholder="Color preferences, occasion, delivery notes..."></textarea></div>
-          <div class="section-label" style="margin-bottom:16px;margin-top:8px;">Payment</div>
+          <div class="section-label" style="margin-bottom:14px;margin-top:6px;">Payment</div>
           <div class="payment-placeholder">
             <div class="ph-icon">💳</div>
             <p><strong>Payment coming soon.</strong><br>After placing your order, From The Garden will reach out to collect payment via Venmo, Zelle, or card link.</p>
@@ -524,46 +496,22 @@
     </div>
   </div>
 
-</div>
+</div><!-- /.store -->
 
 <script>
 // ── PRODUCTS ──────────────────────────────────────────
 const ADDONS = [
-  { id:'babiesbreath', label:"Baby's Breath Initial",    price:15, desc:'Baby\'s breath shaped into an initial', badge:'🌿 Initial' },
-  { id:'calligraphy',  label:'Custom Calligraphy Note',  price:12, desc:'Handwritten note ($10–$15)',            badge:'✍️ Note'    },
-  { id:'flowerbox',    label:'Flower Box',               price:30, desc:'Premium flower box packaging (+$30)',   badge:'📦 Box'     },
+  { id:'babiesbreath', label:"Baby's Breath Initial", price:15, desc:"Baby's breath shaped into an initial", badge:'🌿 Initial' },
+  { id:'calligraphy',  label:'Custom Calligraphy Note', price:12, desc:'Handwritten note ($10–$15)', badge:'✍️ Note' },
+  { id:'flowerbox',    label:'Flower Box', price:30, desc:'Premium flower box packaging (+$30)', badge:'📦 Box' },
 ];
 
 const PRODUCTS = [
-    {
-    id:'spray_roses', name:'Spray Roses', emoji:'🌸',
-    tagline:'One stem. Three blooms. Maximum impact.',
-    description:'Spray roses are the secret weapon of the flower world — smaller than a classic rose, but clustered in a way that makes every bouquet look full, lush, and intentional. Each stem carries approximately 3 blooms.',
-    scarcity: null,
-    stemOptions:[
-      {id:'10', label:'10 Stems',  stems:10,  price:65,  note:'~1 bouquet'},
-      {id:'20', label:'20 Stems',  stems:20,  price:110, note:'~2 bouquets'},
-      {id:'30', label:'30 Stems',  stems:30,  price:160, note:'~3 bouquets'},
-      {id:'40', label:'40 Stems',  stems:40,  price:210, note:'~4 bouquets'},
-      {id:'50', label:'50 Stems',  stems:50,  price:265, note:'~5 bouquets'},
-      {id:'60', label:'60 Stems',  stems:60,  price:310, note:'~6 bouquets'},
-    ],
-    colors:[
-      {id:'white',    label:'Pure White',  hex:'#F5F0EB', emoji:'🤍'},
-      {id:'pink',     label:'Blush Pink',  hex:'#D4748A', emoji:'🌸'},
-      {id:'peach',    label:'Soft Peach',  hex:'#E8A87C', emoji:'🍑'},
-      {id:'yellow',   label:'Soft Yellow', hex:'#E8C94F', emoji:'🌼'},
-      {id:'lavender', label:'Lavender',    hex:'#C9A7D4', emoji:'💜'},
-      {id:'mixed',    label:'Mixed',       hex:'linear-gradient(135deg,#F5F0EB 0%,#D4748A 35%,#E8A87C 65%,#E8C94F 100%)', emoji:'💐'},
-    ],
-    addOns: ADDONS,
-    bgColor:'rgba(212,116,138,0.18)',
-  },
   {
     id:'classic_roses', name:'Classic Roses', emoji:'🌹',
     tagline:'Fresh. Hand-wrapped. Built for the moment.',
-    description:'Our Classic Rose Bouquet is sourced directly through Potomac Floral Wholesale and assembled by hand — full-headed, long-stemmed, and exactly what a rose should be. Choose your color, your stem count, and how you want it wrapped.',
-    scarcity: null,
+    description:'Our Classic Rose Bouquet is sourced directly through Potomac Floral Wholesale and assembled by hand — full-headed, long-stemmed, and exactly what a rose should be.',
+    scarcity:null,
     stemOptions:[
       {id:'25',  label:'25 Stems',  stems:25,  price:80},
       {id:'50',  label:'50 Stems',  stems:50,  price:155},
@@ -580,14 +528,36 @@ const PRODUCTS = [
       {id:'lavender', label:'Lavender',     hex:'#C9A7D4', emoji:'💜'},
       {id:'mixed',    label:'Mixed',        hex:'linear-gradient(135deg,#C0392B 0%,#D4748A 40%,#F5F0EB 70%,#E8C94F 100%)', emoji:'💐'},
     ],
-    addOns: ADDONS,
-    bgColor:'rgba(192,57,43,0.18)',
+    addOns:ADDONS, bgColor:'rgba(192,57,43,0.2)',
+  },
+  {
+    id:'spray_roses', name:'Spray Roses', emoji:'🌸',
+    tagline:'One stem. Three blooms. Maximum impact.',
+    description:'Spray roses are the secret weapon of the flower world — smaller than a classic rose, but clustered in a way that makes every bouquet look full, lush, and intentional. Each stem carries approximately 3 blooms.',
+    scarcity:null,
+    stemOptions:[
+      {id:'10', label:'10 Stems', stems:10, price:65,  note:'~1 bouquet'},
+      {id:'20', label:'20 Stems', stems:20, price:110, note:'~2 bouquets'},
+      {id:'30', label:'30 Stems', stems:30, price:160, note:'~3 bouquets'},
+      {id:'40', label:'40 Stems', stems:40, price:210, note:'~4 bouquets'},
+      {id:'50', label:'50 Stems', stems:50, price:265, note:'~5 bouquets'},
+      {id:'60', label:'60 Stems', stems:60, price:310, note:'~6 bouquets'},
+    ],
+    colors:[
+      {id:'white',    label:'Pure White',  hex:'#F5F0EB', emoji:'🤍'},
+      {id:'pink',     label:'Blush Pink',  hex:'#D4748A', emoji:'🌸'},
+      {id:'peach',    label:'Soft Peach',  hex:'#E8A87C', emoji:'🍑'},
+      {id:'yellow',   label:'Soft Yellow', hex:'#E8C94F', emoji:'🌼'},
+      {id:'lavender', label:'Lavender',    hex:'#C9A7D4', emoji:'💜'},
+      {id:'mixed',    label:'Mixed',       hex:'linear-gradient(135deg,#F5F0EB 0%,#D4748A 35%,#E8A87C 65%,#E8C94F 100%)', emoji:'💐'},
+    ],
+    addOns:ADDONS, bgColor:'rgba(212,116,138,0.2)',
   },
   {
     id:'sweetheart_roses', name:'Sweetheart Roses', emoji:'🩷',
     tagline:'Small stem. Big feeling.',
     description:'Sweetheart roses are the most delicate member of the rose family — petite, tightly budded, and endlessly elegant. They carry the same richness as a classic rose in a softer, more refined form.',
-    scarcity: null,
+    scarcity:null,
     stemOptions:[
       {id:'25',  label:'25 Stems',  stems:25,  price:125},
       {id:'50',  label:'50 Stems',  stems:50,  price:230},
@@ -604,14 +574,13 @@ const PRODUCTS = [
       {id:'peach',    label:'Soft Peach',  hex:'#E8A87C', emoji:'🍑'},
       {id:'mixed',    label:'Mixed',       hex:'linear-gradient(135deg,#C0392B 0%,#F4A7B9 40%,#F5F0EB 70%,#C9A7D4 100%)', emoji:'💐'},
     ],
-    addOns: ADDONS,
-    bgColor:'rgba(244,167,185,0.18)',
+    addOns:ADDONS, bgColor:'rgba(244,167,185,0.2)',
   },
   {
     id:'garden_roses', name:'Garden Roses', emoji:'🌺',
     tagline:'The most luxurious rose we carry. Full stop.',
     description:'Garden roses are in a category of their own — larger blooms, more petals, a richer fragrance, and a presence that commands attention. Sourced fresh through Potomac Floral Wholesale and hand-wrapped to order.',
-    scarcity: 'Garden roses are a premium, limited-availability bloom. Pre-order strongly recommended.',
+    scarcity:'Garden roses are a premium, limited-availability bloom. Pre-order strongly recommended.',
     stemOptions:[
       {id:'12',  label:'12 Stems',  stems:12,  price:165},
       {id:'24',  label:'24 Stems',  stems:24,  price:320},
@@ -627,21 +596,20 @@ const PRODUCTS = [
       {id:'peach', label:'Soft Peach',  hex:'#E8A87C', emoji:'🍑'},
       {id:'mixed', label:'Mixed',       hex:'linear-gradient(135deg,#8B1A1A 0%,#C9788A 40%,#F5F0EB 70%,#E8A87C 100%)', emoji:'💐'},
     ],
-    addOns: ADDONS,
-    bgColor:'rgba(139,26,26,0.22)',
+    addOns:ADDONS, bgColor:'rgba(139,26,26,0.25)',
   },
 ];
 
-// ── STATE ─────────────────────────────────────────────
+// ── STATE ──────────────────────────────────────────────
 let cart = JSON.parse(sessionStorage.getItem('ftg_cart') || '[]');
 let activeProduct = null;
 let selectedStem  = null;
 let selectedColor = null;
 let selectedAddOns = new Set();
 
-// ── VISUAL PANEL ──────────────────────────────────────
+// ── VISUAL PANEL ───────────────────────────────────────
 const VP = {
-  MAX_PARTICLES: 24,
+  MAX_PARTICLES: 40,
   particles: [],
 
   init() {
@@ -649,111 +617,105 @@ const VP = {
     container.innerHTML = '';
     this.particles = [];
 
-    // Get actual pixel dimensions — measure after view is shown
     const panel = document.getElementById('builder-visual');
-    const W = panel.offsetWidth  > 0 ? panel.offsetWidth  : 500;
-    const H = panel.offsetHeight > 0 ? panel.offsetHeight : 600;
+    const W = panel.offsetWidth;
+    const H = panel.offsetHeight;
 
-    // Flower size in px (matches font-size:2rem ~ 32px), padding from edge
-    const SIZE  = 36;
-    const PAD   = SIZE;
-    const MIN_DIST = SIZE * 1.5; // minimum px gap between flower centers
-    const MAX_ATTEMPTS = 60;
+    // If panel has no size yet, skip — will be called again after render
+    if (W === 0 || H === 0) return;
 
-    const placed = []; // stores {px, py} of each placed flower
+    const SIZE = 36;        // approx px size of emoji at 2rem
+    const PAD  = SIZE;      // padding from edges
+    const MIN_DIST = SIZE * 1.6; // min distance between centers in px
+    const MAX_TRIES = 80;
+
+    const placed = [];
 
     for (let i = 0; i < this.MAX_PARTICLES; i++) {
-      let px, py, attempts = 0, valid = false;
+      let px, py, tries = 0, ok = false;
 
-      while (attempts < MAX_ATTEMPTS) {
+      while (tries < MAX_TRIES) {
         px = PAD + Math.random() * (W - PAD * 2);
         py = PAD + Math.random() * (H - PAD * 2);
-        valid = placed.every(p => {
-          const dx = p.px - px;
-          const dy = p.py - py;
-          return Math.sqrt(dx * dx + dy * dy) >= MIN_DIST;
+        ok = placed.every(p => {
+          const dx = p.x - px, dy = p.y - py;
+          return Math.sqrt(dx*dx + dy*dy) >= MIN_DIST;
         });
-        if (valid) break;
-        attempts++;
+        if (ok) break;
+        tries++;
       }
 
-      // Skip if we couldn't find a valid spot
-      if (!valid && placed.length > 0) continue;
+      if (!ok) continue; // skip if no valid spot found
 
-      placed.push({ px, py });
+      placed.push({ x: px, y: py });
 
       const el = document.createElement('span');
       el.className = 'vp-rose';
-      // Convert px back to % for positioning
-      const xPct = (px / W) * 100;
-      const yPct = (py / H) * 100;
-      const r = (Math.random() * 40 - 20) + 'deg';
-      el.style.cssText = `left:${xPct.toFixed(2)}%;top:${yPct.toFixed(2)}%;--r:${r};transform:translate(-50%,-50%) scale(0) rotate(${r})`;
+      const deg = (Math.random() * 40 - 20).toFixed(1) + 'deg';
+      // Use px positioning — reliable regardless of scroll or viewport
+      el.style.left   = px.toFixed(1) + 'px';
+      el.style.top    = py.toFixed(1) + 'px';
+      el.style.setProperty('--r', deg);
       container.appendChild(el);
       this.particles.push(el);
+    }
+
+    // Set current product emoji
+    if (activeProduct) {
+      this.particles.forEach(p => p.textContent = activeProduct.emoji);
     }
   },
 
   setProduct(product) {
-    document.getElementById('vp-name').textContent = product.name;
-    document.getElementById('vp-emoji').textContent = product.emoji;
-    this.particles.forEach(p => p.textContent = product.emoji);
-    // Reset
-    document.getElementById('vp-count').textContent = '—';
-    document.getElementById('vp-clabel').textContent = 'Select your stem count';
-    document.getElementById('vp-price').textContent = '—';
-    document.getElementById('vp-addons').innerHTML = '';
-    document.getElementById('vp-bg').style.background = `radial-gradient(ellipse 80% 80% at 60% 40%, ${product.bgColor} 0%, transparent 70%), #2D2D2D`;
+    document.getElementById('vp-name').textContent    = product.name;
+    document.getElementById('vp-emoji').textContent   = product.emoji;
+    document.getElementById('vp-count').textContent   = '—';
+    document.getElementById('vp-clabel').textContent  = 'Select your stem count';
+    document.getElementById('vp-price').textContent   = '—';
+    document.getElementById('vp-addons').innerHTML    = '';
+    document.getElementById('vp-bg').style.background =
+      `radial-gradient(ellipse 85% 85% at 55% 45%, ${product.bgColor} 0%, transparent 70%), #1a1a1a`;
+    // Hide all particles
+    this.particles.forEach(p => { p.classList.remove('visible'); p.textContent = product.emoji; });
   },
 
   setStem(stemOpt, product) {
-    // Update count display with bump animation
     const countEl = document.getElementById('vp-count');
     countEl.classList.remove('bump');
-    void countEl.offsetWidth; // reflow
+    void countEl.offsetWidth;
     countEl.textContent = stemOpt.stems;
     countEl.classList.add('bump');
     document.getElementById('vp-clabel').textContent = stemOpt.label;
 
-    // Show particles proportional to stem count
     const maxStems = Math.max(...product.stemOptions.map(s => s.stems));
-    const ratio = stemOpt.stems / maxStems;
-    const showCount = Math.max(3, Math.round(ratio * this.MAX_PARTICLES));
+    const ratio    = stemOpt.stems / maxStems;
+    const show     = Math.max(2, Math.round(ratio * this.particles.length));
 
     this.particles.forEach((p, i) => {
-      const show = i < showCount;
-      p.classList.toggle('visible', show);
-      if (show) {
-        // Stagger the animation
-        p.style.transitionDelay = (i * 0.03) + 's';
-      } else {
-        p.style.transitionDelay = '0s';
-      }
+      const visible = i < show;
+      p.style.transitionDelay = visible ? (i * 0.012) + 's' : '0s';
+      p.classList.toggle('visible', visible);
     });
 
-    // Pulse main emoji
     const emoji = document.getElementById('vp-emoji');
-    emoji.style.transform = 'scale(1.2)';
-    setTimeout(() => emoji.style.transform = '', 400);
+    emoji.style.transform = 'scale(1.18)';
+    setTimeout(() => emoji.style.transform = '', 380);
 
     this.updatePrice();
   },
 
-  setColor(color, product) {
-    // Update all particle emojis
+  setColor(color) {
     this.particles.forEach(p => p.textContent = color.emoji);
     document.getElementById('vp-emoji').textContent = color.emoji;
 
-    // Update background glow to match color
     const hex = color.hex.startsWith('linear') ? '#D4748A' : color.hex;
     document.getElementById('vp-bg').style.background =
-      `radial-gradient(ellipse 80% 80% at 60% 40%, ${hex}33 0%, transparent 70%),
-       radial-gradient(ellipse 50% 50% at 30% 70%, ${hex}22 0%, transparent 60%),
-       #2D2D2D`;
+      `radial-gradient(ellipse 85% 85% at 55% 45%, ${hex}35 0%, transparent 70%),
+       radial-gradient(ellipse 50% 50% at 25% 75%, ${hex}20 0%, transparent 60%),
+       #1a1a1a`;
 
-    // Color ring pulse
     const ring = document.getElementById('vp-ring');
-    ring.style.background = `radial-gradient(circle, ${hex}55, transparent 70%)`;
+    ring.style.background = `radial-gradient(circle, ${hex}60, transparent 70%)`;
     ring.classList.remove('pulse');
     void ring.offsetWidth;
     ring.classList.add('pulse');
@@ -766,13 +728,13 @@ const VP = {
       const ao = activeProduct.addOns.find(a => a.id === id);
       if (ao) total += ao.price;
     });
+
     const priceEl = document.getElementById('vp-price');
     priceEl.textContent = total > 0 ? total.toLocaleString() : '—';
-    priceEl.parentElement.classList.remove('changed');
+    priceEl.parentElement.classList.remove('pop');
     void priceEl.offsetWidth;
-    if (total > 0) priceEl.parentElement.classList.add('changed');
+    if (total > 0) priceEl.parentElement.classList.add('pop');
 
-    // Also update builder total
     const bPrice = document.getElementById('b-price');
     if (bPrice) bPrice.textContent = total > 0 ? total.toLocaleString() : '0';
   },
@@ -799,19 +761,23 @@ function showView(id) {
     const el = document.getElementById(v);
     el.style.display = v === id ? (v === 'confirm-view' ? 'flex' : 'block') : 'none';
   });
-  window.scrollTo({top:0,behavior:'smooth'});
+  window.scrollTo({ top:0, behavior:'smooth' });
 }
 function showCatalog() { showView('catalog-view'); }
 function showBuilder() { showView('builder-view'); }
 function goToCheckout() { closeCart(); renderCheckoutSummary(); showView('checkout-view'); }
-function startOver() { cart=[]; saveCart(); selectedStem=null; selectedColor=null; selectedAddOns=new Set(); showView('catalog-view'); }
+function startOver() {
+  cart = []; saveCart();
+  selectedStem = null; selectedColor = null; selectedAddOns = new Set();
+  showView('catalog-view');
+}
 
 // ── CATALOG ───────────────────────────────────────────
 function renderCatalog() {
   document.getElementById('product-grid').innerHTML = PRODUCTS.map(p => `
     <div class="product-card" onclick="openProduct('${p.id}')">
       <div class="product-card-visual">
-        <div class="product-card-visual-bg" style="background:radial-gradient(ellipse 70% 80% at 60% 40%,${p.bgColor} 0%,transparent 70%),#2D2D2D"></div>
+        <div class="product-card-visual-bg" style="background:radial-gradient(ellipse 70% 80% at 60% 40%,${p.bgColor} 0%,transparent 70%),#1a1a1a"></div>
         <span class="product-card-emoji">${p.emoji}</span>
       </div>
       <div class="product-card-body">
@@ -826,17 +792,18 @@ function renderCatalog() {
 }
 
 // ── BUILDER ───────────────────────────────────────────
-function openProduct(productId) {
-  activeProduct = PRODUCTS.find(p => p.id === productId);
-  selectedStem = null; selectedColor = null; selectedAddOns = new Set();
-  VP.setProduct(activeProduct);
+function openProduct(pid) {
+  activeProduct  = PRODUCTS.find(p => p.id === pid);
+  selectedStem   = null;
+  selectedColor  = null;
+  selectedAddOns = new Set();
+
   renderBuilder();
   showView('builder-view');
-  // Init particles AFTER panel is visible so offsetWidth/Height are real
-  requestAnimationFrame(() => {
-    VP.init();
-    VP.particles.forEach(p => p.textContent = activeProduct.emoji);
-  });
+  VP.setProduct(activeProduct);
+
+  // Init particles after the panel is painted and has real dimensions
+  setTimeout(() => VP.init(), 60);
 }
 
 function renderBuilder() {
@@ -853,7 +820,10 @@ function renderBuilder() {
           <div class="stem-opt" data-id="${o.id}" onclick="selectStem('${o.id}')">
             <div class="stem-radio"></div>
             <div class="stem-info">
-              <div class="stem-name">${o.label}${o.note ? `<span style="font-weight:400;color:var(--mid-grey);font-size:0.75rem;">${o.note}</span>` : ''}</div>
+              <div class="stem-name">
+                ${o.label}
+                ${o.note ? `<span class="stem-note">${o.note}</span>` : ''}
+              </div>
             </div>
             <div class="stem-price">$${o.price.toLocaleString()}</div>
           </div>`).join('')}
@@ -872,7 +842,10 @@ function renderBuilder() {
     </div>
 
     <div class="builder-section">
-      <div class="section-label">Step 3 — Add-ons <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--mid-grey);font-size:0.68rem;">(optional)</span></div>
+      <div class="section-label">
+        Step 3 — Add-ons
+        <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--mid-grey);font-size:0.65rem;">(optional)</span>
+      </div>
       <div class="addon-list" id="addon-list">
         ${p.addOns.map(a => `
           <div class="addon-opt" data-id="${a.id}" onclick="toggleAddOn('${a.id}')">
@@ -899,16 +872,14 @@ function renderBuilder() {
 function selectStem(id) {
   selectedStem = id;
   document.querySelectorAll('.stem-opt').forEach(el => el.classList.toggle('selected', el.dataset.id === id));
-  const s = activeProduct.stemOptions.find(o => o.id === id);
-  VP.setStem(s, activeProduct);
+  VP.setStem(activeProduct.stemOptions.find(o => o.id === id), activeProduct);
   clearError();
 }
 
 function selectColor(id) {
   selectedColor = id;
   document.querySelectorAll('.color-opt').forEach(el => el.classList.toggle('selected', el.dataset.id === id));
-  const c = activeProduct.colors.find(o => o.id === id);
-  VP.setColor(c, activeProduct);
+  VP.setColor(activeProduct.colors.find(o => o.id === id));
   clearError();
 }
 
@@ -930,18 +901,18 @@ function clearError() {
 function handleAddToCart() {
   if (!selectedStem) {
     document.getElementById('b-error').textContent = 'Please choose a stem count.';
-    document.getElementById('stem-options').scrollIntoView({behavior:'smooth',block:'center'});
+    document.getElementById('stem-options').scrollIntoView({ behavior:'smooth', block:'center' });
     return;
   }
   if (!selectedColor) {
     document.getElementById('b-error').textContent = 'Please choose a color.';
-    document.getElementById('color-grid').scrollIntoView({behavior:'smooth',block:'center'});
+    document.getElementById('color-grid').scrollIntoView({ behavior:'smooth', block:'center' });
     return;
   }
-  const p = activeProduct;
-  const stem = p.stemOptions.find(s => s.id === selectedStem);
+  const p     = activeProduct;
+  const stem  = p.stemOptions.find(s => s.id === selectedStem);
   const color = p.colors.find(c => c.id === selectedColor);
-  const addOnTotal = Array.from(selectedAddOns).reduce((sum,id) => {
+  const aoTotal = Array.from(selectedAddOns).reduce((sum, id) => {
     const ao = p.addOns.find(a => a.id === id); return sum + (ao ? ao.price : 0);
   }, 0);
 
@@ -951,23 +922,23 @@ function handleAddToCart() {
     stemId: stem.id, stemLabel: stem.label,
     colorId: color.id, colorLabel: color.label, colorHex: color.hex,
     addOns: Array.from(selectedAddOns),
-    unitPrice: stem.price + addOnTotal, qty: 1,
+    unitPrice: stem.price + aoTotal, qty: 1,
   });
 
   saveCart();
-  showToast(`${p.name} — ${stem.label}`, stem.price + addOnTotal);
+  showToast(`${p.name} — ${stem.label}`, stem.price + aoTotal);
   openCart();
 }
 
 // ── CART ──────────────────────────────────────────────
 function saveCart() { sessionStorage.setItem('ftg_cart', JSON.stringify(cart)); updateCartBadge(); }
 function updateCartBadge() {
-  const badge = document.getElementById('cart-count');
-  const count = cart.reduce((s,i) => s + i.qty, 0);
-  badge.textContent = count;
-  badge.style.display = count > 0 ? 'flex' : 'none';
+  const b = document.getElementById('cart-count');
+  const n = cart.reduce((s, i) => s + i.qty, 0);
+  b.textContent = n;
+  b.style.display = n > 0 ? 'flex' : 'none';
 }
-function cartTotal() { return cart.reduce((s,i) => s + i.unitPrice * i.qty, 0); }
+function cartTotal() { return cart.reduce((s, i) => s + i.unitPrice * i.qty, 0); }
 
 function openCart() {
   renderCartDrawer();
@@ -983,7 +954,7 @@ function closeCart() {
 function removeFromCart(id) { cart = cart.filter(i => i.id !== id); saveCart(); renderCartDrawer(); }
 
 function renderCartDrawer() {
-  const body = document.getElementById('drawer-body');
+  const body   = document.getElementById('drawer-body');
   const footer = document.getElementById('drawer-footer');
   if (cart.length === 0) {
     body.innerHTML = `<div class="cart-empty"><div class="icon">🌸</div><p>Your cart is empty.</p></div>`;
@@ -992,14 +963,13 @@ function renderCartDrawer() {
   footer.style.display = 'block';
   body.innerHTML = cart.map(item => {
     const p = PRODUCTS.find(p => p.id === item.productId);
-    const addOnNames = item.addOns.map(id => p?.addOns.find(a=>a.id===id)?.label).filter(Boolean).join(', ');
-    const isGrad = item.colorHex?.startsWith('linear');
+    const aoNames = item.addOns.map(id => p?.addOns.find(a => a.id === id)?.label).filter(Boolean).join(', ');
     return `<div class="cart-item">
       <div class="cart-item-swatch" style="background:${item.colorHex}"></div>
       <div class="cart-item-info">
         <div class="cart-item-name">${item.productName}</div>
         <div class="cart-item-meta">${item.stemLabel} · ${item.colorLabel}</div>
-        ${addOnNames ? `<div class="cart-item-addons">${addOnNames}</div>` : ''}
+        ${aoNames ? `<div class="cart-item-addons">${aoNames}</div>` : ''}
       </div>
       <div class="cart-item-right">
         <div class="cart-item-price">$${item.unitPrice.toLocaleString()}</div>
@@ -1012,27 +982,27 @@ function renderCartDrawer() {
 
 // ── CHECKOUT ──────────────────────────────────────────
 function renderCheckoutSummary() {
-  const itemsEl = document.getElementById('checkout-items');
-  const totalsEl = document.getElementById('checkout-totals');
-  if (!itemsEl || cart.length === 0) {
-    if (itemsEl) itemsEl.innerHTML = '<p style="color:var(--mid-grey);font-size:0.88rem;padding:16px 0;">Your cart is empty.</p>';
-    if (totalsEl) totalsEl.innerHTML = ''; return;
+  const iEl = document.getElementById('checkout-items');
+  const tEl = document.getElementById('checkout-totals');
+  if (!iEl || cart.length === 0) {
+    if (iEl) iEl.innerHTML = '<p style="color:var(--mid-grey);font-size:0.87rem;padding:14px 0;">Your cart is empty.</p>';
+    if (tEl) tEl.innerHTML = ''; return;
   }
-  itemsEl.innerHTML = cart.map(item => {
+  iEl.innerHTML = cart.map(item => {
     const p = PRODUCTS.find(p => p.id === item.productId);
-    const addOnNames = item.addOns.map(id => p?.addOns.find(a=>a.id===id)?.label).filter(Boolean).join(', ');
+    const aoNames = item.addOns.map(id => p?.addOns.find(a => a.id === id)?.label).filter(Boolean).join(', ');
     return `<div class="summary-item">
       <div class="summary-swatch" style="background:${item.colorHex}"></div>
       <div class="summary-info">
         <div class="summary-name">${item.productName}</div>
         <div class="summary-meta">${item.stemLabel} · ${item.colorLabel}</div>
-        ${addOnNames ? `<div class="summary-addons">${addOnNames}</div>` : ''}
+        ${aoNames ? `<div class="summary-addons">${aoNames}</div>` : ''}
       </div>
       <div class="summary-price">$${item.unitPrice.toLocaleString()}</div>
     </div>`;
   }).join('');
   const sub = cartTotal();
-  totalsEl.innerHTML = `
+  tEl.innerHTML = `
     <div class="summary-row"><span>Subtotal</span><span>$${sub.toLocaleString()}</span></div>
     <div class="summary-row"><span>Delivery</span><span>TBD</span></div>
     <div class="summary-row grand"><span class="label">Total</span><span>$${sub.toLocaleString()}+</span></div>`;
@@ -1050,7 +1020,7 @@ function placeOrder(e) {
 
 // ── TOAST ─────────────────────────────────────────────
 function showToast(name, price) {
-  document.getElementById('toast-name').textContent = name;
+  document.getElementById('toast-name').textContent  = name;
   document.getElementById('toast-price').textContent = `$${price.toLocaleString()}`;
   const t = document.getElementById('toast');
   t.classList.add('show');
