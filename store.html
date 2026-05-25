@@ -337,20 +337,29 @@
 
     /* ── RESPONSIVE ── */
     @media(max-width:900px){
-      .builder-layout{grid-template-columns:1fr}
+      /* Stack layout vertically */
+      .builder-layout{grid-template-columns:1fr; display:flex; flex-direction:column;}
 
+      /* Sticky visual panel — stays at top while form scrolls */
       .builder-visual{
-        position:relative;top:0;
-        height:260px;min-height:260px;
+        position:sticky;
+        top:var(--header-h);
+        height:220px;
+        min-height:220px;
         flex-shrink:0;
+        z-index:10;
+        box-shadow:0 4px 24px rgba(0,0,0,0.3);
       }
-      .vp-rose{font-size:1.5rem}
-      .vp-main-emoji{font-size:3rem;margin-bottom:10px}
-      .vp-stem-count{font-size:3rem}
-      .vp-price{font-size:1.8rem}
-      .vp-product-name{font-size:0.95rem}
-      .vp-center{padding:16px}
+      .vp-rose{font-size:1.4rem}
+      .vp-main-emoji{font-size:2.8rem;margin-bottom:8px}
+      .vp-stem-count{font-size:2.8rem}
+      .vp-price{font-size:1.7rem}
+      .vp-product-name{font-size:0.88rem}
+      .vp-center{padding:14px}
+      .vp-addon-badge{font-size:0.52rem;padding:3px 7px}
+      .vp-stem-label{font-size:0.55rem;margin-bottom:8px}
 
+      /* Form scrolls naturally below sticky panel */
       .builder-form{
         padding:24px 20px;
         overflow-y:visible;
@@ -373,12 +382,13 @@
       header{padding:0 16px}
       .back-link{display:none}
 
-      .builder-visual{height:200px;min-height:200px}
-      .vp-rose{font-size:1.2rem}
-      .vp-main-emoji{font-size:2.5rem}
-      .vp-stem-count{font-size:2.4rem}
-      .vp-price{font-size:1.5rem}
-      .vp-center{padding:12px}
+      /* Slightly shorter on small phones */
+      .builder-visual{height:190px;min-height:190px;}
+      .vp-rose{font-size:1.1rem}
+      .vp-main-emoji{font-size:2.4rem}
+      .vp-stem-count{font-size:2.2rem}
+      .vp-price{font-size:1.4rem}
+      .vp-center{padding:10px}
 
       .builder-form{padding:18px 14px}
       .builder-product-name{font-size:1.7rem}
@@ -539,7 +549,7 @@ const ADDONS = [
 ];
 
 const PRODUCTS = [
-  {
+    {
     id:'spray_roses', name:'Spray Roses', emoji:'🌸',
     tagline:'One stem. Three blooms. Maximum impact.',
     description:'Spray roses are the secret weapon of the flower world — smaller than a classic rose, but clustered in a way that makes every bouquet look full, lush, and intentional. Each stem carries approximately 3 blooms.',
