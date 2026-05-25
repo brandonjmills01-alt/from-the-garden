@@ -120,16 +120,25 @@
       position:relative;z-index:3;
       text-align:center;padding:24px;
       pointer-events:none;
-      /* Frosted dark backdrop so text is always readable */
-      background:radial-gradient(ellipse 85% 75% at 50% 50%, rgba(26,26,26,0.72) 30%, transparent 100%);
-      border-radius:50%;
-      width:260px;
-      min-height:180px;
       display:flex;
       flex-direction:column;
       align-items:center;
       justify-content:center;
     }
+    /* Giant faded emoji watermark behind the text */
+    .vp-center::before{
+      content:attr(data-emoji);
+      position:absolute;
+      font-size:14rem;
+      line-height:1;
+      opacity:0.12;
+      z-index:-1;
+      pointer-events:none;
+      filter:blur(2px);
+      transition:content 0.3s, opacity 0.3s;
+      user-select:none;
+    }
+    /* Strong text shadow on all vp text for extra legibility */
     .vp-main-emoji{
       font-size:4.5rem;display:block;line-height:1;
       margin-bottom:16px;
@@ -138,22 +147,26 @@
     }
     .vp-product-name{
       font-family:var(--font-display);font-size:1.1rem;font-style:italic;
-      color:rgba(255,255,255,0.6);margin-bottom:6px;
+      color:rgba(255,255,255,0.9);margin-bottom:6px;
+      text-shadow:0 2px 12px rgba(0,0,0,0.9), 0 0 24px rgba(0,0,0,0.8);
     }
     .vp-stem-count{
       font-family:var(--font-display);font-size:4.5rem;font-weight:300;
       color:var(--white);line-height:1;margin-bottom:2px;
+      text-shadow:0 2px 16px rgba(0,0,0,1), 0 0 32px rgba(0,0,0,0.9);
     }
     .vp-stem-count.bump{animation:bump 0.35s cubic-bezier(0.34,1.56,0.64,1)}
     @keyframes bump{0%{transform:scale(1)}50%{transform:scale(1.18)}100%{transform:scale(1)}}
     .vp-stem-label{
       font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;
-      color:rgba(255,255,255,0.3);margin-bottom:14px;
+      color:rgba(255,255,255,0.8);margin-bottom:14px;
+      text-shadow:0 1px 8px rgba(0,0,0,1);
     }
     .vp-price{
       font-family:var(--font-display);font-size:2.4rem;font-weight:300;
       color:var(--white);line-height:1;
       transition:all 0.3s ease;
+      text-shadow:0 2px 16px rgba(0,0,0,1), 0 0 32px rgba(0,0,0,0.9);
     }
     .vp-price sup{font-size:1rem;color:var(--blush-light);vertical-align:super}
     .vp-price.pop{animation:pricePop 0.3s ease}
@@ -398,7 +411,7 @@
       .vp-main-emoji{font-size:2.4rem}
       .vp-stem-count{font-size:2.2rem}
       .vp-price{font-size:1.4rem}
-      .vp-center{padding:8px;width:190px;min-height:130px}
+      .vp-center{padding:8px}
 
       .builder-form{padding:18px 14px}
       .builder-product-name{font-size:1.7rem}
@@ -475,7 +488,7 @@
         <div class="vp-roses" id="vp-roses"></div>
         <div class="vp-color-ring" id="vp-ring"></div>
         <div class="vp-glow" id="vp-glow"></div>
-        <div class="vp-center">
+        <div class="vp-center" id="vp-center" data-emoji="🌹">
           <span class="vp-main-emoji" id="vp-emoji">🌹</span>
           <div class="vp-product-name" id="vp-name"></div>
           <div class="vp-stem-count" id="vp-count">—</div>
@@ -721,6 +734,7 @@ const VP = {
   setProduct(product) {
     document.getElementById('vp-name').textContent    = product.name;
     document.getElementById('vp-emoji').textContent   = product.emoji;
+    document.getElementById('vp-center').dataset.emoji = product.emoji;
     document.getElementById('vp-count').textContent   = '—';
     document.getElementById('vp-clabel').textContent  = 'Select your stem count';
     document.getElementById('vp-price').textContent   = '—';
@@ -758,6 +772,7 @@ const VP = {
   setColor(color) {
     this.particles.forEach(p => p.textContent = color.emoji);
     document.getElementById('vp-emoji').textContent = color.emoji;
+    document.getElementById('vp-center').dataset.emoji = color.emoji;
 
     const hex = color.hex.startsWith('linear') ? '#D4748A' : color.hex;
     document.getElementById('vp-bg').style.background =
