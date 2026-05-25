@@ -535,6 +535,30 @@ const ADDONS = [
 ];
 
 const PRODUCTS = [
+    {
+    id:'spray_roses', name:'Spray Roses', emoji:'🌸',
+    tagline:'One stem. Three blooms. Maximum impact.',
+    description:'Spray roses are the secret weapon of the flower world — smaller than a classic rose, but clustered in a way that makes every bouquet look full, lush, and intentional. Each stem carries approximately 3 blooms.',
+    scarcity: null,
+    stemOptions:[
+      {id:'10', label:'10 Stems',  stems:10,  price:65,  note:'~1 bouquet'},
+      {id:'20', label:'20 Stems',  stems:20,  price:110, note:'~2 bouquets'},
+      {id:'30', label:'30 Stems',  stems:30,  price:160, note:'~3 bouquets'},
+      {id:'40', label:'40 Stems',  stems:40,  price:210, note:'~4 bouquets'},
+      {id:'50', label:'50 Stems',  stems:50,  price:265, note:'~5 bouquets'},
+      {id:'60', label:'60 Stems',  stems:60,  price:310, note:'~6 bouquets'},
+    ],
+    colors:[
+      {id:'white',    label:'Pure White',  hex:'#F5F0EB', emoji:'🤍'},
+      {id:'pink',     label:'Blush Pink',  hex:'#D4748A', emoji:'🌸'},
+      {id:'peach',    label:'Soft Peach',  hex:'#E8A87C', emoji:'🍑'},
+      {id:'yellow',   label:'Soft Yellow', hex:'#E8C94F', emoji:'🌼'},
+      {id:'lavender', label:'Lavender',    hex:'#C9A7D4', emoji:'💜'},
+      {id:'mixed',    label:'Mixed',       hex:'linear-gradient(135deg,#F5F0EB 0%,#D4748A 35%,#E8A87C 65%,#E8C94F 100%)', emoji:'💐'},
+    ],
+    addOns: ADDONS,
+    bgColor:'rgba(212,116,138,0.18)',
+  },
   {
     id:'classic_roses', name:'Classic Roses', emoji:'🌹',
     tagline:'Fresh. Hand-wrapped. Built for the moment.',
@@ -558,30 +582,6 @@ const PRODUCTS = [
     ],
     addOns: ADDONS,
     bgColor:'rgba(192,57,43,0.18)',
-  },
-  {
-    id:'spray_roses', name:'Spray Roses', emoji:'🌸',
-    tagline:'One stem. Three blooms. Maximum impact.',
-    description:'Spray roses are the secret weapon of the flower world — smaller than a classic rose, but clustered in a way that makes every bouquet look full, lush, and intentional. Each stem carries approximately 3 blooms.',
-    scarcity: null,
-    stemOptions:[
-      {id:'10', label:'10 Stems',  stems:10,  price:65,  note:'~1 bouquet'},
-      {id:'20', label:'20 Stems',  stems:20,  price:110, note:'~2 bouquets'},
-      {id:'30', label:'30 Stems',  stems:30,  price:160, note:'~3 bouquets'},
-      {id:'40', label:'40 Stems',  stems:40,  price:210, note:'~4 bouquets'},
-      {id:'50', label:'50 Stems',  stems:50,  price:265, note:'~5 bouquets'},
-      {id:'60', label:'60 Stems',  stems:60,  price:310, note:'~6 bouquets'},
-    ],
-    colors:[
-      {id:'white',    label:'Pure White',  hex:'#F5F0EB', emoji:'🤍'},
-      {id:'pink',     label:'Blush Pink',  hex:'#D4748A', emoji:'🌸'},
-      {id:'peach',    label:'Soft Peach',  hex:'#E8A87C', emoji:'🍑'},
-      {id:'yellow',   label:'Soft Yellow', hex:'#E8C94F', emoji:'🌼'},
-      {id:'lavender', label:'Lavender',    hex:'#C9A7D4', emoji:'💜'},
-      {id:'mixed',    label:'Mixed',       hex:'linear-gradient(135deg,#F5F0EB 0%,#D4748A 35%,#E8A87C 65%,#E8C94F 100%)', emoji:'💐'},
-    ],
-    addOns: ADDONS,
-    bgColor:'rgba(212,116,138,0.18)',
   },
   {
     id:'sweetheart_roses', name:'Sweetheart Roses', emoji:'🩷',
