@@ -609,7 +609,7 @@ let selectedAddOns = new Set();
 
 // ── VISUAL PANEL ───────────────────────────────────────
 const VP = {
-  MAX_PARTICLES: 100,
+  MAX_PARTICLES: 40,
   particles: [],
 
   init() {
@@ -692,9 +692,8 @@ const VP = {
     const show     = Math.max(2, Math.round(ratio * this.particles.length));
 
     this.particles.forEach((p, i) => {
-      const visible = i < show;
-      p.style.transitionDelay = visible ? (i * 0.012) + 's' : '0s';
-      p.classList.toggle('visible', visible);
+      p.style.transitionDelay = '0s';
+      p.classList.toggle('visible', i < show);
     });
 
     const emoji = document.getElementById('vp-emoji');
