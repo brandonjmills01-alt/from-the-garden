@@ -89,12 +89,17 @@
       background:#1a1a1a;
       display:flex;align-items:center;justify-content:center;
       overflow:hidden;
+      transition:box-shadow 0.5s ease;
     }
+
+    /* Background glow — transitions color on pick */
     .vp-bg{
       position:absolute;inset:0;
-      transition:background 0.6s ease;
+      transition:background 0.55s ease;
       background:#1a1a1a;
     }
+
+    /* Flower particles layer */
     .vp-roses{
       position:absolute;inset:0;
       pointer-events:none;
@@ -103,8 +108,7 @@
     }
     .vp-rose{
       position:absolute;
-      font-size:2rem;
-      line-height:1;
+      font-size:2rem;line-height:1;
       opacity:0;
       transform:translate(-50%,-50%) scale(0) rotate(var(--r,0deg));
       transition:opacity 0.18s ease, transform 0.18s cubic-bezier(0.34,1.56,0.64,1);
@@ -116,111 +120,144 @@
       opacity:1;
       transform:translate(-50%,-50%) scale(1) rotate(var(--r,0deg));
     }
+
+    /* Ring pulse on color change */
+    .vp-color-ring{
+      position:absolute;width:200px;height:200px;border-radius:50%;
+      opacity:0;transform:scale(0.5);pointer-events:none;z-index:2;
+    }
+    .vp-color-ring.pulse{animation:ringPulse 0.7s ease forwards}
+    @keyframes ringPulse{0%{transform:scale(0.5);opacity:0.5}100%{transform:scale(3.5);opacity:0}}
+
+    /* Particle bounce on color change */
+    @keyframes particleBounce{
+      0%  {transform:translate(-50%,-50%) scale(1)   rotate(var(--r,0deg))}
+      45% {transform:translate(-50%,-50%) scale(1.35) rotate(var(--r,0deg))}
+      100%{transform:translate(-50%,-50%) scale(1)   rotate(var(--r,0deg))}
+    }
+    .vp-rose.bounce{animation:particleBounce 0.38s cubic-bezier(0.34,1.56,0.64,1)}
+
+    /* ── CENTER CONTENT — simple centered column ── */
     .vp-center{
-      position:relative;z-index:3;
-      text-align:center;padding:24px;
+      position:absolute;inset:0;
+      z-index:3;
       pointer-events:none;
       display:flex;
       flex-direction:column;
       align-items:center;
       justify-content:center;
+      text-align:center;
+      gap:0;
     }
-    /* Giant faded emoji watermark behind the text */
-    .vp-center::before{
-      content:attr(data-emoji);
-      position:absolute;
-      font-size:14rem;
-      line-height:1;
-      opacity:0.12;
-      z-index:-1;
-      pointer-events:none;
-      filter:blur(2px);
-      transition:content 0.3s, opacity 0.3s;
-      user-select:none;
+
+    .vp-product-name{
+      font-family:var(--font-display);
+      font-size:1.6rem;font-style:italic;font-weight:400;
+      letter-spacing:0.04em;
+      color:rgba(255,255,255,0.9);
+      margin-bottom:12px;
+      text-shadow:0 2px 12px rgba(0,0,0,0.8);
     }
-    /* Strong text shadow on all vp text for extra legibility */
+
     .vp-main-emoji{
-      font-size:4.5rem;display:block;line-height:1;
+      font-size:4.5rem;
+      line-height:1;
       margin-bottom:16px;
       filter:drop-shadow(0 8px 32px rgba(0,0,0,0.6));
       transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
     }
-    .vp-product-name{
-      font-family:var(--font-display);font-size:1.1rem;font-style:italic;
-      color:rgba(255,255,255,0.9);margin-bottom:6px;
-      text-shadow:0 2px 12px rgba(0,0,0,0.9), 0 0 24px rgba(0,0,0,0.8);
-    }
+
     .vp-stem-count{
-      font-family:var(--font-display);font-size:4.5rem;font-weight:300;
-      color:var(--white);line-height:1;margin-bottom:2px;
-      text-shadow:0 2px 16px rgba(0,0,0,1), 0 0 32px rgba(0,0,0,0.9);
+      font-family:var(--font-display);
+      font-size:6rem;font-weight:300;
+      color:var(--white);
+      line-height:1;
+      margin-bottom:8px;
+      text-shadow:0 2px 20px rgba(0,0,0,0.8);
     }
     .vp-stem-count.bump{animation:bump 0.35s cubic-bezier(0.34,1.56,0.64,1)}
-    @keyframes bump{0%{transform:scale(1)}50%{transform:scale(1.18)}100%{transform:scale(1)}}
+    @keyframes bump{0%{transform:scale(1)}50%{transform:scale(1.14)}100%{transform:scale(1)}}
+
     .vp-stem-label{
-      font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;
-      color:rgba(255,255,255,0.8);margin-bottom:14px;
-      text-shadow:0 1px 8px rgba(0,0,0,1);
+      font-size:0.65rem;letter-spacing:0.22em;text-transform:uppercase;
+      color:rgba(255,255,255,0.75);
+      margin-bottom:16px;
+      text-shadow:0 1px 8px rgba(0,0,0,0.9);
     }
+
     .vp-price{
-      font-family:var(--font-display);font-size:2.4rem;font-weight:300;
+      font-family:var(--font-display);
+      font-size:2rem;font-weight:300;
       color:var(--white);line-height:1;
       transition:all 0.3s ease;
-      text-shadow:0 2px 16px rgba(0,0,0,1), 0 0 32px rgba(0,0,0,0.9);
+      margin-bottom:14px;
+      text-shadow:0 2px 12px rgba(0,0,0,0.8);
     }
-    .vp-price sup{font-size:1rem;color:var(--blush-light);vertical-align:super}
+    .vp-price sup{font-size:0.85rem;color:rgba(255,255,255,0.6);vertical-align:super}
     .vp-price.pop{animation:pricePop 0.3s ease}
-    @keyframes pricePop{0%{transform:scale(1)}50%{transform:scale(1.08);color:var(--blush-light)}100%{transform:scale(1)}}
+    @keyframes pricePop{0%{transform:scale(1)}50%{transform:scale(1.1)}100%{transform:scale(1)}}
+
     .vp-addons{
       display:flex;flex-wrap:wrap;justify-content:center;
-      gap:5px;margin-top:12px;min-height:24px;
+      gap:5px;
     }
     .vp-addon-badge{
-      font-size:0.58rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;
-      padding:3px 9px;
-      background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.4);
-      color:rgba(255,255,255,0.95);
+      font-size:0.55rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;
+      padding:4px 9px;
+      background:rgba(255,255,255,0.12);
+      border:1px solid rgba(255,255,255,0.3);
+      color:rgba(255,255,255,0.9);
       transform:translateY(6px);opacity:0;
       transition:all 0.25s cubic-bezier(0.34,1.56,0.64,1);
     }
     .vp-addon-badge.visible{transform:translateY(0);opacity:1}
-    .vp-color-ring{
-      position:absolute;width:180px;height:180px;border-radius:50%;
-      opacity:0;transform:scale(0.5);pointer-events:none;z-index:1;
-    }
-    .vp-color-ring.pulse{animation:ringPulse 0.6s ease forwards}
-    @keyframes ringPulse{0%{transform:scale(0.5);opacity:0.35}100%{transform:scale(2.8);opacity:0}}
 
-    /* Sun glow layer — sits behind everything, blooms on color select */
-    .vp-glow{
-      position:absolute;
-      width:100%;height:100%;
-      inset:0;
-      pointer-events:none;
-      z-index:1;
-      opacity:0;
-      transition:opacity 0.5s ease, background 0.5s ease;
-      border-radius:0;
+    /* Vase selector */
+    .vase-extra{ background:var(--cream-dark); border-color:var(--light-grey); }
+    .vase-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-top:4px; }
+    .vase-opt{
+      display:flex;flex-direction:column;align-items:center;
+      padding:14px 10px;
+      background:var(--white);
+      border:2px solid transparent;
+      cursor:pointer;
+      transition:all 0.18s;
+      text-align:center;
     }
-    .vp-glow.active{opacity:1;}
+    .vase-opt:hover{ border-color:var(--blush-light); }
+    .vase-opt.selected{ border-color:var(--blush); background:var(--blush-pale); }
+    .vase-icon{ font-size:2rem; margin-bottom:8px; }
+    .vase-name{ font-size:0.75rem; font-weight:600; color:var(--near-black); margin-bottom:4px; }
+    .vase-desc{ font-size:0.68rem; color:var(--mid-grey); line-height:1.4; margin-bottom:6px; }
+    .vase-price{ font-family:var(--font-display); font-size:1rem; color:var(--blush); }
 
-    /* Outline glow on the panel itself */
-    .builder-visual{
-      transition:box-shadow 0.5s ease;
+    /* Add-on extra input fields */
+    .addon-extra{
+      padding:12px 16px 14px;
+      background:var(--sage-pale);
+      border:1px solid var(--sage);
+      border-top:none;
+      display:none;
     }
-    .builder-visual.color-glow{
-      box-shadow:0 0 0 2px var(--glow-color, transparent),
-                 0 0 40px 8px var(--glow-color, transparent),
-                 0 0 80px 16px var(--glow-color-soft, transparent);
+    .addon-extra label{
+      display:block;font-size:0.65rem;font-weight:600;
+      letter-spacing:0.1em;text-transform:uppercase;
+      color:var(--sage);margin-bottom:8px;
     }
-
-    /* Particle bounce on color change */
-    @keyframes particleBounce{
-      0%{transform:translate(-50%,-50%) scale(1) rotate(var(--r,0deg))}
-      40%{transform:translate(-50%,-50%) scale(1.3) rotate(var(--r,0deg))}
-      100%{transform:translate(-50%,-50%) scale(1) rotate(var(--r,0deg))}
+    .addon-extra input, .addon-extra textarea{
+      width:100%;padding:10px 12px;
+      background:var(--white);border:1.5px solid var(--sage-pale);
+      font-family:var(--font-body);font-size:0.9rem;
+      color:var(--near-black);outline:none;
+      transition:border-color 0.2s;resize:none;
     }
-    .vp-rose.bounce{animation:particleBounce 0.35s cubic-bezier(0.34,1.56,0.64,1)}
+    .addon-extra input:focus, .addon-extra textarea:focus{
+      border-color:var(--sage);
+    }
+    .addon-extra input[maxlength="1"]{
+      width:64px;text-align:center;font-size:1.4rem;
+      font-family:var(--font-display);letter-spacing:0.1em;
+    }
 
     /* ── BUILDER FORM ── */
     .builder-form{
@@ -487,12 +524,11 @@
         <div class="vp-bg" id="vp-bg"></div>
         <div class="vp-roses" id="vp-roses"></div>
         <div class="vp-color-ring" id="vp-ring"></div>
-        <div class="vp-glow" id="vp-glow"></div>
-        <div class="vp-center" id="vp-center" data-emoji="🌹">
-          <span class="vp-main-emoji" id="vp-emoji">🌹</span>
+        <div class="vp-center" id="vp-center">
           <div class="vp-product-name" id="vp-name"></div>
+          <span class="vp-main-emoji" id="vp-emoji">🌹</span>
           <div class="vp-stem-count" id="vp-count">—</div>
-          <div class="vp-stem-label" id="vp-clabel">Select your stem count</div>
+          <div class="vp-stem-label" id="vp-clabel">stems</div>
           <div class="vp-price"><sup>$</sup><span id="vp-price">—</span></div>
           <div class="vp-addons" id="vp-addons"></div>
         </div>
@@ -567,46 +603,29 @@
 // ── PRODUCTS ──────────────────────────────────────────
 const ADDONS = [
   { id:'babiesbreath', label:"Baby's Breath Initial", price:15, desc:"Baby's breath shaped into an initial", badge:'🌿 Initial' },
-  { id:'calligraphy',  label:'Custom Calligraphy Note', price:12, desc:'Handwritten note ($10–$15)', badge:'✍️ Note' },
-  { id:'flowerbox',    label:'Flower Box', price:30, desc:'Premium flower box packaging (+$30)', badge:'📦 Box' },
+  { id:'calligraphy',  label:'Custom Calligraphy Note', price:18, desc:'Handwritten note, up to 500 characters', badge:'✍️ Note' },
+  { id:'flowerbox',    label:'Flower Box', price:30, desc:'Premium flower box packaging', badge:'📦 Box' },
+  { id:'vase',         label:'Add a Vase', price:0, desc:'Choose from three vase styles', badge:'🏺 Vase' },
+];
+
+const VASES = [
+  { id:'vase_clear',   label:'Clear Bud Vase',    price:12, desc:'Sleek and minimal. Lets the flowers speak.',  icon:'🫙' },
+  { id:'vase_amber',   label:'Amber Glass Vase',  price:16, desc:'Warm-toned glass. Earthy and elegant.',       icon:'🟫' },
+  { id:'vase_ceramic', label:'White Ceramic Vase', price:20, desc:'Clean matte finish. Modern and polished.',   icon:'⬜' },
 ];
 
 const PRODUCTS = [
-    {
-    id:'spray_roses', name:'Spray Roses', emoji:'🌸',
-    tagline:'One stem. Three blooms. Maximum impact.',
-    description:'Spray roses are the secret weapon of the flower world — smaller than a classic rose, but clustered in a way that makes every bouquet look full, lush, and intentional. Each stem carries approximately 3 blooms.',
-    scarcity:null,
-    stemOptions:[
-      {id:'10', label:'10 Stems', stems:10, price:65,  note:'~1 bouquet'},
-      {id:'20', label:'20 Stems', stems:20, price:110, note:'~2 bouquets'},
-      {id:'30', label:'30 Stems', stems:30, price:160, note:'~3 bouquets'},
-      {id:'40', label:'40 Stems', stems:40, price:210, note:'~4 bouquets'},
-      {id:'50', label:'50 Stems', stems:50, price:265, note:'~5 bouquets'},
-      {id:'60', label:'60 Stems', stems:60, price:310, note:'~6 bouquets'},
-    ],
-    colors:[
-      {id:'white',    label:'Pure White',  hex:'#F5F0EB', emoji:'🤍'},
-      {id:'pink',     label:'Blush Pink',  hex:'#D4748A', emoji:'🌸'},
-      {id:'peach',    label:'Soft Peach',  hex:'#E8A87C', emoji:'🍑'},
-      {id:'yellow',   label:'Soft Yellow', hex:'#E8C94F', emoji:'🌼'},
-      {id:'lavender', label:'Lavender',    hex:'#C9A7D4', emoji:'💜'},
-      {id:'mixed',    label:'Mixed',       hex:'linear-gradient(135deg,#F5F0EB 0%,#D4748A 35%,#E8A87C 65%,#E8C94F 100%)', emoji:'💐'},
-    ],
-    addOns:ADDONS, bgColor:'rgba(212,116,138,0.2)',
-  },
   {
     id:'classic_roses', name:'Classic Roses', emoji:'🌹',
     tagline:'Fresh. Hand-wrapped. Built for the moment.',
     description:'Our Classic Rose Bouquet is sourced directly through Potomac Floral Wholesale and assembled by hand — full-headed, long-stemmed, and exactly what a rose should be.',
     scarcity:null,
     stemOptions:[
-      {id:'25',  label:'25 Stems',  stems:25,  price:80},
+      {id:'10',  label:'10 Stems',  stems:10,  price:35},
+      {id:'20',  label:'20 Stems',  stems:20,  price:65},
+      {id:'30',  label:'30 Stems',  stems:30,  price:95},
+      {id:'40',  label:'40 Stems',  stems:40,  price:125},
       {id:'50',  label:'50 Stems',  stems:50,  price:155},
-      {id:'75',  label:'75 Stems',  stems:75,  price:225},
-      {id:'100', label:'100 Stems', stems:100, price:320},
-      {id:'150', label:'150 Stems', stems:150, price:445},
-      {id:'200', label:'200 Stems', stems:200, price:550},
     ],
     colors:[
       {id:'red',      label:'Classic Red',  hex:'#C0392B', emoji:'🌹'},
@@ -619,17 +638,38 @@ const PRODUCTS = [
     addOns:ADDONS, bgColor:'rgba(192,57,43,0.2)',
   },
   {
+    id:'spray_roses', name:'Spray Roses', emoji:'🌸',
+    tagline:'One stem. Three blooms. Maximum impact.',
+    description:'Spray roses are the secret weapon of the flower world — smaller than a classic rose, but clustered in a way that makes every bouquet look full, lush, and intentional. Each stem carries approximately 3 blooms.',
+    scarcity:null,
+    stemOptions:[
+      {id:'10',  label:'10 Stems',  stems:10,  price:65},
+      {id:'20',  label:'20 Stems',  stems:20,  price:110},
+      {id:'30',  label:'30 Stems',  stems:30,  price:160},
+      {id:'40',  label:'40 Stems',  stems:40,  price:210},
+      {id:'50',  label:'50 Stems',  stems:50,  price:265},
+    ],
+    colors:[
+      {id:'white',    label:'Pure White',  hex:'#F5F0EB', emoji:'🤍'},
+      {id:'pink',     label:'Blush Pink',  hex:'#D4748A', emoji:'🌸'},
+      {id:'peach',    label:'Soft Peach',  hex:'#E8A87C', emoji:'🍑'},
+      {id:'yellow',   label:'Soft Yellow', hex:'#E8C94F', emoji:'🌼'},
+      {id:'lavender', label:'Lavender',    hex:'#C9A7D4', emoji:'💜'},
+      {id:'mixed',    label:'Mixed',       hex:'linear-gradient(135deg,#F5F0EB 0%,#D4748A 35%,#E8A87C 65%,#E8C94F 100%)', emoji:'💐'},
+    ],
+    addOns:ADDONS, bgColor:'rgba(212,116,138,0.2)',
+  },
+  {
     id:'sweetheart_roses', name:'Sweetheart Roses', emoji:'🩷',
     tagline:'Small stem. Big feeling.',
     description:'Sweetheart roses are the most delicate member of the rose family — petite, tightly budded, and endlessly elegant. They carry the same richness as a classic rose in a softer, more refined form.',
     scarcity:null,
     stemOptions:[
-      {id:'25',  label:'25 Stems',  stems:25,  price:125},
+      {id:'10',  label:'10 Stems',  stems:10,  price:45},
+      {id:'20',  label:'20 Stems',  stems:20,  price:85},
+      {id:'30',  label:'30 Stems',  stems:30,  price:125},
+      {id:'40',  label:'40 Stems',  stems:40,  price:165},
       {id:'50',  label:'50 Stems',  stems:50,  price:230},
-      {id:'75',  label:'75 Stems',  stems:75,  price:345},
-      {id:'100', label:'100 Stems', stems:100, price:460},
-      {id:'150', label:'150 Stems', stems:150, price:690},
-      {id:'200', label:'200 Stems', stems:200, price:900},
     ],
     colors:[
       {id:'red',      label:'Classic Red', hex:'#C0392B', emoji:'🌹'},
@@ -650,9 +690,8 @@ const PRODUCTS = [
       {id:'12',  label:'12 Stems',  stems:12,  price:165},
       {id:'24',  label:'24 Stems',  stems:24,  price:320},
       {id:'36',  label:'36 Stems',  stems:36,  price:475},
-      {id:'50',  label:'50 Stems',  stems:50,  price:660},
-      {id:'75',  label:'75 Stems',  stems:75,  price:990},
-      {id:'100', label:'100 Stems', stems:100, price:1300},
+      {id:'48',  label:'48 Stems',  stems:48,  price:625},
+      {id:'60',  label:'60 Stems',  stems:60,  price:775},
     ],
     colors:[
       {id:'red',   label:'Deep Red',    hex:'#8B1A1A', emoji:'🌺'},
@@ -696,12 +735,22 @@ const VP = {
 
     const placed = [];
 
+    // Clear zone in center — nothing placed within this radius of the panel center
+    const cx = W / 2;
+    const cy = H / 2;
+    const CLEAR_RADIUS = Math.min(W, H) * 0.28; // 28% of smaller dimension
+
     for (let i = 0; i < this.MAX_PARTICLES; i++) {
       let px, py, tries = 0, ok = false;
 
       while (tries < MAX_TRIES) {
         px = PAD + Math.random() * (W - PAD * 2);
         py = PAD + Math.random() * (H - PAD * 2);
+
+        // Reject if inside the center clear zone
+        const distToCenter = Math.sqrt((px - cx) ** 2 + (py - cy) ** 2);
+        if (distToCenter < CLEAR_RADIUS) { tries++; continue; }
+
         ok = placed.every(p => {
           const dx = p.x - px, dy = p.y - py;
           return Math.sqrt(dx*dx + dy*dy) >= MIN_DIST;
@@ -710,7 +759,7 @@ const VP = {
         tries++;
       }
 
-      if (!ok) continue; // skip if no valid spot found
+      if (!ok) continue;
 
       placed.push({ x: px, y: py });
 
@@ -734,7 +783,7 @@ const VP = {
   setProduct(product) {
     document.getElementById('vp-name').textContent    = product.name;
     document.getElementById('vp-emoji').textContent   = product.emoji;
-    document.getElementById('vp-center').dataset.emoji = product.emoji;
+
     document.getElementById('vp-count').textContent   = '—';
     document.getElementById('vp-clabel').textContent  = 'Select your stem count';
     document.getElementById('vp-price').textContent   = '—';
@@ -770,27 +819,43 @@ const VP = {
   },
 
   setColor(color) {
-    this.particles.forEach(p => p.textContent = color.emoji);
-    document.getElementById('vp-emoji').textContent = color.emoji;
-    document.getElementById('vp-center').dataset.emoji = color.emoji;
-
+    // Emoji stays fixed — only background reacts to color
     const hex = color.hex.startsWith('linear') ? '#D4748A' : color.hex;
+
+    // Very noticeable background glow — blooms up from the bottom like a sunrise
     document.getElementById('vp-bg').style.background =
-      `radial-gradient(ellipse 85% 85% at 55% 45%, ${hex}35 0%, transparent 70%),
-       radial-gradient(ellipse 50% 50% at 25% 75%, ${hex}20 0%, transparent 60%),
+      `radial-gradient(ellipse 130% 110% at 50% 80%, ${hex}75 0%, ${hex}45 20%, ${hex}18 45%, transparent 70%),
+       radial-gradient(ellipse 80% 70% at 15% 95%, ${hex}45 0%, transparent 50%),
+       radial-gradient(ellipse 60% 50% at 85% 5%,  ${hex}30 0%, transparent 45%),
        #1a1a1a`;
 
+    // Inset + outset edge glow on the panel
+    const panel = document.getElementById('builder-visual');
+    panel.style.boxShadow = `inset 0 -60px 120px ${hex}40, inset 0 0 60px ${hex}20, 0 0 50px 10px ${hex}60`;
+    setTimeout(() => { panel.style.boxShadow = ''; }, 950);
+
+    // Ring pulse from center
     const ring = document.getElementById('vp-ring');
-    ring.style.background = `radial-gradient(circle, ${hex}60, transparent 70%)`;
+    ring.style.background = `radial-gradient(circle, ${hex}95, transparent 70%)`;
     ring.classList.remove('pulse');
     void ring.offsetWidth;
     ring.classList.add('pulse');
+
+    // Bounce all visible particles
+    this.particles.forEach(p => {
+      if (!p.classList.contains('visible')) return;
+      p.classList.remove('bounce');
+      void p.offsetWidth;
+      p.classList.add('bounce');
+      setTimeout(() => p.classList.remove('bounce'), 400);
+    });
   },
 
   updatePrice() {
     let total = 0;
     if (selectedStem) total += activeProduct.stemOptions.find(s => s.id === selectedStem).price;
     selectedAddOns.forEach(id => {
+      if (id === 'vase') { total += getVasePrice(); return; }
       const ao = activeProduct.addOns.find(a => a.id === id);
       if (ao) total += ao.price;
     });
@@ -921,7 +986,33 @@ function renderBuilder() {
               <div class="addon-desc">${a.desc}</div>
             </div>
             <div class="addon-price">+$${a.price}</div>
-          </div>`).join('')}
+          </div>
+          ${a.id === 'babiesbreath' ? `
+          <div class="addon-extra" id="extra-babiesbreath" style="display:none;">
+            <label>Which letter initial?</label>
+            <input type="text" maxlength="1" placeholder="e.g. A" id="input-babiesbreath" oninput="this.value=this.value.toUpperCase().replace(/[^A-Z]/,'')" />
+          </div>` : ''}
+          ${a.id === 'vase' ? `
+          <div class="addon-extra vase-extra" id="extra-vase" style="display:none;">
+            <label>Choose your vase style</label>
+            <div class="vase-grid">
+              ${VASES.map(v => `
+                <div class="vase-opt" data-id="${v.id}" onclick="selectVase('${v.id}')">
+                  <div class="vase-icon">${v.icon}</div>
+                  <div class="vase-name">${v.label}</div>
+                  <div class="vase-desc">${v.desc}</div>
+                  <div class="vase-price">+$${v.price}</div>
+                </div>
+              `).join('')}
+            </div>
+          </div>` : ''}
+          ${a.id === 'calligraphy' ? `
+          <div class="addon-extra" id="extra-calligraphy" style="display:none;">
+            <label>What should the note say? <span style="font-weight:400;text-transform:none;letter-spacing:0;">(max 500 characters)</span></label>
+            <textarea placeholder="e.g. Happy Birthday Sarah, love you always..." id="input-calligraphy" rows="3" maxlength="500" oninput="document.getElementById('calligraphy-count').textContent=500-this.value.length"></textarea>
+            <div style="font-size:0.65rem;color:var(--sage);margin-top:5px;text-align:right;"><span id="calligraphy-count">500</span> characters remaining</div>
+          </div>` : ''}
+        `).join('')}
       </div>
     </div>
 
@@ -949,12 +1040,37 @@ function selectColor(id) {
   clearError();
 }
 
+let selectedVase = null;
+
+function selectVase(id) {
+  selectedVase = id;
+  document.querySelectorAll('.vase-opt').forEach(el =>
+    el.classList.toggle('selected', el.dataset.id === id)
+  );
+  // Update the addon price display dynamically
+  const v = VASES.find(v => v.id === id);
+  VP.updatePrice();
+}
+
+function getVasePrice() {
+  if (!selectedAddOns.has('vase') || !selectedVase) return 0;
+  const v = VASES.find(v => v.id === selectedVase);
+  return v ? v.price : 0;
+}
+
 function toggleAddOn(id) {
   selectedAddOns.has(id) ? selectedAddOns.delete(id) : selectedAddOns.add(id);
+  // If unchecking vase, clear selection
+  if (id === 'vase' && !selectedAddOns.has('vase')) selectedVase = null;
   document.querySelectorAll('.addon-opt').forEach(el => {
     const on = selectedAddOns.has(el.dataset.id);
     el.classList.toggle('selected', on);
     el.querySelector('.addon-check').textContent = on ? '✓' : '';
+  });
+  // Show/hide extra input fields
+  ['babiesbreath','calligraphy','vase'].forEach(aid => {
+    const extraEl = document.getElementById('extra-' + aid);
+    if (extraEl) extraEl.style.display = selectedAddOns.has(aid) ? 'block' : 'none';
   });
   VP.setAddOns(selectedAddOns, activeProduct.addOns);
 }
@@ -982,13 +1098,30 @@ function handleAddToCart() {
     const ao = p.addOns.find(a => a.id === id); return sum + (ao ? ao.price : 0);
   }, 0);
 
+  const initialInput = document.getElementById('input-babiesbreath');
+  const noteInput    = document.getElementById('input-calligraphy');
+  const initialVal   = (selectedAddOns.has('babiesbreath') && initialInput) ? initialInput.value.trim() : '';
+  const noteVal      = (selectedAddOns.has('calligraphy')  && noteInput)    ? noteInput.value.trim()    : '';
+  const vaseObj      = selectedVase ? VASES.find(v => v.id === selectedVase) : null;
+
+  // Recalculate total including variable vase price
+  const realTotal = stem.price
+    + Array.from(selectedAddOns).reduce((sum, id) => {
+        if (id === 'vase') return sum + getVasePrice();
+        const ao = p.addOns.find(a => a.id === id);
+        return sum + (ao ? ao.price : 0);
+      }, 0);
+
   cart.push({
     id: Date.now(),
     productId: p.id, productName: p.name,
     stemId: stem.id, stemLabel: stem.label,
     colorId: color.id, colorLabel: color.label, colorHex: color.hex,
     addOns: Array.from(selectedAddOns),
-    unitPrice: stem.price + aoTotal, qty: 1,
+    initialLetter: initialVal,
+    calligraphyNote: noteVal,
+    vaseLabel: vaseObj ? vaseObj.label : '',
+    unitPrice: realTotal, qty: 1,
   });
 
   saveCart();
