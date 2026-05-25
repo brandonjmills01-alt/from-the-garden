@@ -645,28 +645,38 @@ const VP = {
   particles: [],
 
 init() {
-  const container = document.getElementById('vp-roses');
+   const container = document.getElementById('vp-roses');
   container.innerHTML = '';
   this.particles = [];
 
-  // Grid-based placement so flowers don't overlap
-  const cols = 6;
-  const rows = Math.ceil(this.MAX_PARTICLES / cols);
-  const cellW = 100 / cols;
-  const cellH = 100 / rows;
+  const placed = [];
+  const minDist = 12; // minimum % distance between flowers — increase to spread more
+  const maxAttempts = 50;
 
   for (let i = 0; i < this.MAX_PARTICLES; i++) {
+    let x, y, attempts = 0;
+    let valid = false;
+
+    while (attempts < maxAttempts) {
+      x = 5 + Math.random() * 90;
+      y = 5 + Math.random() * 90;
+      valid = placed.every(p => {
+        const dx = p.x - x;
+        const dy = p.y - y;
+        return Math.sqrt(dx * dx + dy * dy) >= minDist;
+      });
+      if (valid) break;
+      attempts++;
+    }
+
+    // If no valid spot found after maxAttempts, skip this particle
+    if (!valid) continue;
+
+    placed.push({ x, y });
+
     const el = document.createElement('span');
     el.className = 'vp-rose';
-
-    const col = i % cols;
-    const row = Math.floor(i / cols);
-
-    // Center of each cell + small random nudge so it doesn't look robotic
-    const x = (col * cellW) + (cellW / 2) + (Math.random() * 8 - 4);
-    const y = (row * cellH) + (cellH / 2) + (Math.random() * 8 - 4);
-    const r = (Math.random() * 30 - 15) + 'deg';
-
+    const r = (Math.random() * 40 - 20) + 'deg';
     el.style.cssText = `left:${x}%;top:${y}%;--r:${r}`;
     container.appendChild(el);
     this.particles.push(el);
