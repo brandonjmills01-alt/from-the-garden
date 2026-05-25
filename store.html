@@ -263,9 +263,9 @@
     .builder-product-name{font-family:var(--font-display);font-size:2rem;font-weight:500;margin-bottom:6px}
     .builder-product-desc{font-size:0.87rem;color:var(--mid-grey);line-height:1.65;margin-bottom:28px}
     .scarcity-note{background:rgba(201,162,39,0.08);border:1px solid rgba(201,162,39,0.2);padding:10px 14px;font-size:0.78rem;color:#7a5e00;line-height:1.5;margin-bottom:22px}
-    .section-label{font-size:0.65rem;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--near-black);margin-bottom:12px;display:flex;align-items:center;gap:10px}
+    .section-label{font-size:0.65rem;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--near-black);margin-bottom:12px;display:flex;align-items:center;gap:10px;scroll-margin-top:calc(var(--header-h) + 260px)}
     .section-label::after{content:'';flex:1;height:1px;background:var(--cream-dark)}
-    .builder-section{margin-bottom:28px}
+    .builder-section{margin-bottom:28px;scroll-margin-top:calc(var(--header-h) + 220px + 16px)}
 
     /* Stem options */
     .stem-options{display:flex;flex-direction:column;gap:6px}
@@ -391,41 +391,81 @@
 
     /* ── RESPONSIVE ── */
     @media(max-width:900px){
-      /* Stack layout vertically */
-      .builder-layout{grid-template-columns:1fr; display:flex; flex-direction:column;}
+      .builder-layout{grid-template-columns:1fr;display:flex;flex-direction:column}
 
-      /* Sticky visual panel — stays at top while form scrolls */
+      /* Sticky visual — compact but readable */
       .builder-visual{
         position:sticky;
         top:var(--header-h);
-        height:220px;
-        min-height:220px;
+        height:195px;
+        min-height:195px;
         flex-shrink:0;
         z-index:10;
         box-shadow:0 4px 24px rgba(0,0,0,0.3);
       }
-      .vp-rose{font-size:1.4rem}
-      .vp-main-emoji{font-size:2.8rem;margin-bottom:8px}
-      .vp-stem-count{font-size:2.8rem}
-      .vp-price{font-size:1.7rem}
-      .vp-product-name{font-size:0.88rem}
-      .vp-center{padding:10px;width:220px;min-height:150px}
-      .vp-addon-badge{font-size:0.52rem;padding:3px 7px}
-      .vp-stem-label{font-size:0.55rem;margin-bottom:8px}
+      .vp-center{padding:6px}
+      .vp-product-name{font-size:0.75rem;margin-bottom:4px}
+      .vp-main-emoji{font-size:2rem;margin-bottom:6px}
+      .vp-stem-count{font-size:2.4rem;margin-bottom:3px}
+      .vp-stem-label{font-size:0.5rem;letter-spacing:0.16em;margin-bottom:6px}
+      .vp-price{font-size:1.4rem;margin-bottom:6px}
+      .vp-addons{gap:3px;margin-top:3px;min-height:auto}
+      .vp-addon-badge{font-size:0.48rem;padding:2px 6px}
+      .vp-rose{font-size:1.1rem}
 
-      /* Form scrolls naturally below sticky panel */
+      /* Form — generous padding so nothing crowds */
       .builder-form{
-        padding:24px 20px;
+        padding:28px 18px 48px;
         overflow-y:visible;
         height:auto;
         border-left:none;
         border-top:1px solid var(--cream-dark);
       }
+      .builder-product-name{font-size:1.8rem;margin-bottom:6px}
+      .builder-product-desc{font-size:0.84rem;line-height:1.6;margin-bottom:24px}
+      .builder-section{margin-bottom:24px}
 
+      /* Stem options */
+      .stem-opt{padding:13px 14px}
+      .stem-name{font-size:0.86rem}
+      .stem-price{font-size:1.1rem}
+
+      /* Color */
+      .color-grid{gap:10px}
+      .color-swatch{width:38px;height:38px}
+      .color-name{font-size:0.6rem;max-width:44px}
+
+      /* Add-ons */
+      .addon-opt{padding:12px 14px}
+      .addon-name{font-size:0.84rem}
+      .addon-desc{font-size:0.72rem}
+
+      /* Add-on extra input fields — no cramping */
+      .addon-extra{
+        padding:16px 14px 18px;
+        margin-bottom:2px;
+      }
+      .addon-extra label{font-size:0.62rem;margin-bottom:10px}
+      .addon-extra input[maxlength="1"]{
+        width:64px;height:56px;font-size:1.6rem;
+      }
+      .addon-extra textarea{min-height:100px;font-size:0.88rem}
+
+      /* CTA */
+      .builder-cta{padding-top:22px;margin-top:24px}
+      .builder-total-price{font-size:2.2rem}
+      .add-to-cart-btn{padding:16px;font-size:0.78rem}
+
+      /* Vases coming soon */
+      .vases-coming-soon{padding:11px 14px;margin-top:4px}
+      .vcs-label{font-size:0.86rem}
+
+      /* Checkout */
       .checkout-layout{grid-template-columns:1fr}
       .checkout-summary-panel{border-top:1px solid var(--cream-dark)}
-      .checkout-form-panel{padding:28px 20px;border-right:none}
+      .checkout-form-panel{padding:28px 18px;border-right:none}
 
+      /* Catalog */
       .product-grid{grid-template-columns:repeat(2,1fr)}
       #catalog-view{padding:0 16px 60px}
       .store-header{padding:32px 0 24px}
@@ -436,31 +476,46 @@
       header{padding:0 16px}
       .back-link{display:none}
 
-      /* Slightly shorter on small phones */
-      .builder-visual{height:190px;min-height:190px;}
-      .vp-rose{font-size:1.1rem}
-      .vp-main-emoji{font-size:2.4rem}
-      .vp-stem-count{font-size:2.2rem}
-      .vp-price{font-size:1.4rem}
-      .vp-center{padding:8px}
+      /* Visual panel */
+      .builder-visual{height:180px;min-height:180px}
+      .vp-center{padding:4px}
+      .vp-product-name{font-size:0.7rem;margin-bottom:3px}
+      .vp-main-emoji{font-size:1.8rem;margin-bottom:5px}
+      .vp-stem-count{font-size:2.2rem;margin-bottom:2px}
+      .vp-stem-label{font-size:0.48rem;margin-bottom:5px}
+      .vp-price{font-size:1.25rem;margin-bottom:5px}
+      .vp-rose{font-size:1rem}
 
-      .builder-form{padding:18px 14px}
-      .builder-product-name{font-size:1.7rem}
+      /* Form */
+      .builder-form{padding:22px 14px 48px}
+      .builder-product-name{font-size:1.6rem}
+      .builder-section{margin-bottom:20px}
       .builder-total-price{font-size:2rem}
       .add-to-cart-btn{padding:15px;font-size:0.76rem}
 
-      .stem-opt{padding:11px 12px}
-      .stem-price{font-size:1.05rem}
-      .color-swatch{width:36px;height:36px}
-      .color-name{font-size:0.6rem;max-width:40px}
+      /* Stems */
+      .stem-opt{padding:11px 11px}
+      .stem-price{font-size:1rem}
 
+      /* Colors */
+      .color-swatch{width:34px;height:34px}
+      .color-name{font-size:0.58rem;max-width:38px}
+      .color-grid{gap:8px}
+
+      /* Add-on extras */
+      .addon-extra{padding:14px 12px 16px}
+      .addon-extra input[maxlength="1"]{width:58px;height:52px;font-size:1.4rem}
+
+      /* Catalog */
       .product-grid{grid-template-columns:1fr}
       #catalog-view{padding:0 12px 48px}
       .store-header h1{font-size:1.8rem}
 
+      /* Checkout */
       .form-row{grid-template-columns:1fr}
       .checkout-form-panel{padding:18px 14px}
 
+      /* Cart + confirm */
       #cart-drawer{width:100%;max-width:100%}
       #confirm-view{padding:60px 14px}
     }
@@ -602,7 +657,7 @@ const ADDONS = [
 ];
 
 const PRODUCTS = [
-   {
+  {
     id:'classic_roses', name:'Classic Roses', emoji:'🌹',
     tagline:'Fresh. Hand-wrapped. Built for the moment.',
     description:'Our Classic Rose Bouquet is sourced directly through Potomac Floral Wholesale and assembled by hand — full-headed, long-stemmed, and exactly what a rose should be.',
