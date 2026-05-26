@@ -94,11 +94,35 @@
       transition:box-shadow 0.5s ease,background-image 0.6s ease;
     }
 
+    /* Color tint — recolors the photo to match selected color */
+    /* Stack of two blend modes: 'color' swaps hue, 'soft-light' lifts brightness */
+    .vp-photo-tint{
+      position:absolute;inset:0;
+      background:transparent;
+      mix-blend-mode:color;
+      pointer-events:none;
+      transition:background 0.55s ease, opacity 0.55s ease;
+      opacity:0;
+      z-index:0;
+    }
+    .vp-photo-tint.active{opacity:1}
+    .vp-photo-lift{
+      position:absolute;inset:0;
+      background:transparent;
+      mix-blend-mode:soft-light;
+      pointer-events:none;
+      transition:background 0.55s ease, opacity 0.55s ease;
+      opacity:0;
+      z-index:0;
+    }
+    .vp-photo-lift.active{opacity:1}
+
     /* Dark wash + color glow over the photo */
     .vp-bg{
       position:absolute;inset:0;
       transition:background 0.55s ease;
       background:linear-gradient(180deg,rgba(0,0,0,0.42) 0%,rgba(0,0,0,0.7) 100%);
+      z-index:1;
     }
 
     /* Flower particles layer */
@@ -106,7 +130,7 @@
       position:absolute;inset:0;
       pointer-events:none;
       overflow:hidden;
-      z-index:1;
+      z-index:2;
     }
     .vp-rose{
       position:absolute;
@@ -126,7 +150,7 @@
     /* Ring pulse on color change */
     .vp-color-ring{
       position:absolute;width:200px;height:200px;border-radius:50%;
-      opacity:0;transform:scale(0.5);pointer-events:none;z-index:2;
+      opacity:0;transform:scale(0.5);pointer-events:none;z-index:3;
     }
     .vp-color-ring.pulse{animation:ringPulse 0.7s ease forwards}
     @keyframes ringPulse{0%{transform:scale(0.5);opacity:0.5}100%{transform:scale(3.5);opacity:0}}
@@ -142,7 +166,7 @@
     /* ── CENTER CONTENT — simple centered column ── */
     .vp-center{
       position:absolute;inset:0;
-      z-index:3;
+      z-index:4;
       pointer-events:none;
       display:flex;
       flex-direction:column;
@@ -159,6 +183,35 @@
       color:rgba(255,255,255,0.9);
       margin-bottom:12px;
       text-shadow:0 2px 12px rgba(0,0,0,0.8);
+    }
+
+    /* Color chip — confirms the selected color in text + swatch form */
+    .vp-color-chip{
+      display:none;
+      align-items:center;gap:10px;
+      padding:7px 18px 7px 8px;
+      margin-bottom:18px;
+      background:rgba(255,255,255,0.16);
+      border:1px solid rgba(255,255,255,0.32);
+      border-radius:999px;
+      -webkit-backdrop-filter:blur(10px);
+      backdrop-filter:blur(10px);
+      font-family:var(--font-body);
+      font-size:0.74rem;font-weight:600;
+      letter-spacing:0.16em;text-transform:uppercase;
+      color:rgba(255,255,255,1);
+      text-shadow:0 1px 6px rgba(0,0,0,0.6);
+      transform:translateY(6px) scale(0.95);opacity:0;
+      transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1),opacity 0.3s ease;
+    }
+    .vp-color-chip.visible{display:inline-flex;transform:translateY(0) scale(1);opacity:1}
+    .vp-color-chip.pop{animation:chipPop 0.45s cubic-bezier(0.34,1.56,0.64,1)}
+    @keyframes chipPop{0%{transform:translateY(0) scale(1)}40%{transform:translateY(0) scale(1.08)}100%{transform:translateY(0) scale(1)}}
+    .vp-color-chip .swatch{
+      width:22px;height:22px;border-radius:50%;
+      border:1.5px solid rgba(255,255,255,0.7);
+      box-shadow:0 2px 6px rgba(0,0,0,0.4),0 0 0 1px rgba(0,0,0,0.15);
+      flex-shrink:0;
     }
 
     .vp-main-emoji{
@@ -407,6 +460,8 @@
       }
       .vp-center{padding:6px}
       .vp-product-name{font-size:0.75rem;margin-bottom:4px}
+      .vp-color-chip{font-size:0.6rem;padding:4px 12px 4px 5px;margin-bottom:8px;letter-spacing:0.12em}
+      .vp-color-chip .swatch{width:16px;height:16px;border-width:1px}
       .vp-main-emoji{font-size:2rem;margin-bottom:6px}
       .vp-stem-count{font-size:2.4rem;margin-bottom:3px}
       .vp-stem-label{font-size:0.5rem;letter-spacing:0.16em;margin-bottom:6px}
@@ -582,11 +637,14 @@
     <button class="builder-back" onclick="showCatalog()">← All Products</button>
     <div class="builder-layout">
       <div class="builder-visual" id="builder-visual">
+        <div class="vp-photo-tint" id="vp-tint"></div>
+        <div class="vp-photo-lift" id="vp-lift"></div>
         <div class="vp-bg" id="vp-bg"></div>
         <div class="vp-roses" id="vp-roses"></div>
         <div class="vp-color-ring" id="vp-ring"></div>
         <div class="vp-center" id="vp-center">
           <div class="vp-product-name" id="vp-name"></div>
+          <div class="vp-color-chip" id="vp-chip"></div>
           <span class="vp-main-emoji" id="vp-emoji">🌹</span>
           <div class="vp-stem-count" id="vp-count">—</div>
           <div class="vp-stem-label" id="vp-clabel">stems</div>
@@ -847,6 +905,17 @@ const VP = {
     const panel = document.getElementById('builder-visual');
     panel.style.backgroundImage = `url('images/${product.photo}')`;
 
+    // Reset photo tint, brightness lift, and color chip
+    const tint = document.getElementById('vp-tint');
+    tint.classList.remove('active');
+    tint.style.background = 'transparent';
+    const lift = document.getElementById('vp-lift');
+    lift.classList.remove('active');
+    lift.style.background = 'transparent';
+    const chip = document.getElementById('vp-chip');
+    chip.classList.remove('visible','pop');
+    chip.innerHTML = '';
+
     // Dark wash + subtle brand-color vignette over the photo
     document.getElementById('vp-bg').style.background =
       `linear-gradient(180deg, rgba(0,0,0,0.42) 0%, rgba(0,0,0,0.72) 100%),
@@ -884,13 +953,36 @@ const VP = {
     // Emoji stays fixed — only background reacts to color
     const hex = color.hex.startsWith('linear') ? '#D4748A' : color.hex;
 
-    // Very noticeable background glow — blooms up from the bottom like a sunrise
-    // Dark wash stays on top of photo for readability; color glow lights it from within
+    // Recolor the photo itself via mix-blend-mode: color
+    // This swaps the hue+saturation of every pixel in the photo while preserving
+    // brightness/shadows — making the roses literally change color on screen.
+    const tintBg = color.hex.startsWith('linear') ? color.hex : hex;
+    const tint = document.getElementById('vp-tint');
+    tint.style.background = tintBg;
+    tint.classList.add('active');
+
+    // Secondary blend — soft-light pass brightens the photo so the new color reads
+    // through the original dark shadows. Without this, dark-red areas stay muddy.
+    const lift = document.getElementById('vp-lift');
+    lift.style.background = tintBg;
+    lift.classList.add('active');
+
+    // Soft brand color glow under the dark wash for warmth around the edges
     document.getElementById('vp-bg').style.background =
-      `linear-gradient(180deg, rgba(0,0,0,0.32) 0%, rgba(0,0,0,0.62) 100%),
-       radial-gradient(ellipse 130% 110% at 50% 80%, ${hex}80 0%, ${hex}50 20%, ${hex}20 45%, transparent 70%),
-       radial-gradient(ellipse 80% 70% at 15% 95%, ${hex}50 0%, transparent 50%),
-       radial-gradient(ellipse 60% 50% at 85% 5%,  ${hex}35 0%, transparent 45%)`;
+      `linear-gradient(180deg, rgba(0,0,0,0.28) 0%, rgba(0,0,0,0.58) 100%),
+       radial-gradient(ellipse 130% 110% at 50% 80%, ${hex}55 0%, ${hex}25 25%, transparent 60%),
+       radial-gradient(ellipse 60% 50% at 85% 5%,  ${hex}25 0%, transparent 45%)`;
+
+    // Update / show the color chip near the product name
+    const chip = document.getElementById('vp-chip');
+    chip.innerHTML = `<span class="swatch" style="background:${tintBg};${color.id==='white'?'border-color:rgba(255,255,255,0.85);':''}"></span><span>${color.label}</span>`;
+    if (chip.classList.contains('visible')) {
+      chip.classList.remove('pop');
+      void chip.offsetWidth;
+      chip.classList.add('pop');
+    } else {
+      chip.classList.add('visible');
+    }
 
     // Inset + outset edge glow on the panel
     const panel = document.getElementById('builder-visual');
