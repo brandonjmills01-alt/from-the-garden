@@ -54,20 +54,20 @@
     .store-header h1{font-family:var(--font-display);font-size:clamp(2rem,5vw,3.2rem);font-weight:500;font-style:italic;line-height:1.1}
     .store-header h1 em{font-style:normal;color:var(--blush)}
     .store-header p{color:var(--mid-grey);margin-top:12px;max-width:480px;font-size:0.95rem;line-height:1.7}
-    .product-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:2px}
-    .product-card{background:var(--cream-dark);cursor:pointer;transition:background 0.2s;overflow:hidden}
-    .product-card:hover{background:#ede5dc}
-    .product-card-visual{height:200px;background:var(--near-black);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
-    .product-card-visual-bg{position:absolute;inset:0}
-    .product-card-emoji{font-size:4.5rem;position:relative;z-index:1;filter:drop-shadow(0 4px 16px rgba(0,0,0,0.4));transition:transform 0.3s cubic-bezier(0.34,1.56,0.64,1)}
-    .product-card:hover .product-card-emoji{transform:scale(1.1)}
-    .product-card-body{padding:24px 26px 28px}
-    .product-card-name{font-family:var(--font-display);font-size:1.35rem;font-weight:500;margin-bottom:5px}
-    .product-card-desc{font-size:0.83rem;color:var(--mid-grey);line-height:1.6;margin-bottom:18px}
-    .product-card-price-row{display:flex;align-items:center;justify-content:space-between}
-    .product-card-price{font-family:var(--font-display);font-size:1.45rem;font-weight:400}
-    .product-card-price small{font-size:0.73rem;color:var(--mid-grey);font-family:var(--font-body)}
-    .product-card-cta{font-size:0.68rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--blush)}
+    .product-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+    .product-card{position:relative;aspect-ratio:4/5;background:var(--near-black);cursor:pointer;overflow:hidden}
+    .product-card-photo{position:absolute;inset:0;background-size:cover;background-position:center;transition:transform 0.8s cubic-bezier(0.22,0.61,0.36,1)}
+    .product-card:hover .product-card-photo{transform:scale(1.06)}
+    .product-card-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.88) 0%,rgba(0,0,0,0.55) 22%,rgba(0,0,0,0.12) 50%,rgba(0,0,0,0) 70%,rgba(0,0,0,0.18) 100%);pointer-events:none}
+    .product-card-eyebrow{position:absolute;top:22px;left:24px;font-size:0.6rem;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:rgba(255,255,255,0.85);text-shadow:0 2px 8px rgba(0,0,0,0.5);z-index:2}
+    .product-card-content{position:absolute;left:0;right:0;bottom:0;padding:28px 28px 26px;color:var(--white);z-index:2}
+    .product-card-name{font-family:var(--font-display);font-size:1.75rem;font-weight:500;margin-bottom:6px;letter-spacing:0.01em;text-shadow:0 2px 14px rgba(0,0,0,0.5)}
+    .product-card-tagline{font-size:0.82rem;line-height:1.55;color:rgba(255,255,255,0.88);margin-bottom:18px;text-shadow:0 1px 8px rgba(0,0,0,0.5);max-width:90%}
+    .product-card-row{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+    .product-card-price{font-family:var(--font-display);font-size:1.35rem;font-weight:400;color:var(--white);text-shadow:0 1px 8px rgba(0,0,0,0.5)}
+    .product-card-price small{font-size:0.7rem;color:rgba(255,255,255,0.7);font-family:var(--font-body);margin-left:2px}
+    .product-card-cta{font-size:0.66rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--white);padding-bottom:3px;border-bottom:1px solid rgba(255,255,255,0.45);transition:border-color 0.25s ease,transform 0.25s ease}
+    .product-card:hover .product-card-cta{border-color:var(--white);transform:translateX(4px)}
 
     /* ── BUILDER WRAPPER ── */
     #builder-view{display:none}
@@ -86,17 +86,19 @@
       position:sticky;
       top:var(--header-h);
       height:calc(100vh - var(--header-h));
-      background:#1a1a1a;
+      background-color:#1a1a1a;
+      background-size:cover;
+      background-position:center;
       display:flex;align-items:center;justify-content:center;
       overflow:hidden;
-      transition:box-shadow 0.5s ease;
+      transition:box-shadow 0.5s ease,background-image 0.6s ease;
     }
 
-    /* Background glow — transitions color on pick */
+    /* Dark wash + color glow over the photo */
     .vp-bg{
       position:absolute;inset:0;
       transition:background 0.55s ease;
-      background:#1a1a1a;
+      background:linear-gradient(180deg,rgba(0,0,0,0.42) 0%,rgba(0,0,0,0.7) 100%);
     }
 
     /* Flower particles layer */
@@ -466,7 +468,12 @@
       .checkout-form-panel{padding:28px 18px;border-right:none}
 
       /* Catalog */
-      .product-grid{grid-template-columns:repeat(2,1fr)}
+      .product-grid{grid-template-columns:repeat(2,1fr);gap:14px}
+      .product-card-content{padding:22px 20px 20px}
+      .product-card-name{font-size:1.35rem}
+      .product-card-tagline{font-size:0.74rem;margin-bottom:14px}
+      .product-card-price{font-size:1.15rem}
+      .product-card-eyebrow{top:16px;left:18px;font-size:0.55rem}
       #catalog-view{padding:0 16px 60px}
       .store-header{padding:32px 0 24px}
     }
@@ -507,7 +514,12 @@
       .addon-extra input[maxlength="1"]{width:58px;height:52px;font-size:1.4rem}
 
       /* Catalog */
-      .product-grid{grid-template-columns:1fr}
+      .product-grid{grid-template-columns:1fr;gap:14px}
+      .product-card{aspect-ratio:5/6}
+      .product-card-content{padding:24px 22px 22px}
+      .product-card-name{font-size:1.55rem}
+      .product-card-tagline{font-size:0.8rem;margin-bottom:16px}
+      .product-card-price{font-size:1.3rem}
       #catalog-view{padding:0 12px 48px}
       .store-header h1{font-size:1.8rem}
 
@@ -658,7 +670,7 @@ const ADDONS = [
 
 const PRODUCTS = [
   {
-    id:'classic_roses', name:'Classic Roses', emoji:'🌹',
+    id:'classic_roses', name:'Classic Roses', emoji:'🌹', photo:'classic-roses.jpg',
     tagline:'Fresh. Hand-wrapped. Built for the moment.',
     description:'Our Classic Rose Bouquet is sourced directly through Potomac Floral Wholesale and assembled by hand — full-headed, long-stemmed, and exactly what a rose should be.',
     scarcity:null,
@@ -680,7 +692,7 @@ const PRODUCTS = [
     addOns:ADDONS, bgColor:'rgba(192,57,43,0.2)',
   },
   {
-    id:'sweetheart_roses', name:'Sweetheart Roses', emoji:'🩷',
+    id:'sweetheart_roses', name:'Sweetheart Roses', emoji:'🩷', photo:'sweetheart-roses.jpg',
     tagline:'Small stem. Big feeling.',
     description:'Sweetheart roses are the most delicate member of the rose family — petite, tightly budded, and endlessly elegant. They carry the same richness as a classic rose in a softer, more refined form.',
     scarcity:null,
@@ -702,7 +714,7 @@ const PRODUCTS = [
     addOns:ADDONS, bgColor:'rgba(244,167,185,0.2)',
   },
   {
-    id:'spray_roses', name:'Spray Roses', emoji:'🌸',
+    id:'spray_roses', name:'Spray Roses', emoji:'🌸', photo:'spray-roses.jpg',
     tagline:'One stem. Three blooms. Maximum impact.',
     description:'Spray roses are the secret weapon of the flower world — smaller than a classic rose, but clustered in a way that makes every bouquet look full, lush, and intentional. Each stem carries approximately 3 blooms.',
     scarcity:null,
@@ -724,7 +736,7 @@ const PRODUCTS = [
     addOns:ADDONS, bgColor:'rgba(212,116,138,0.2)',
   },
   {
-    id:'garden_roses', name:'Garden Roses', emoji:'🌺',
+    id:'garden_roses', name:'Garden Roses', emoji:'🌺', photo:'garden-roses.jpg',
     tagline:'The most luxurious rose we carry. Full stop.',
     description:'Garden roses are in a category of their own — larger blooms, more petals, a richer fragrance, and a presence that commands attention. Sourced fresh through Potomac Floral Wholesale and hand-wrapped to order.',
     scarcity:'Garden roses are a premium, limited-availability bloom. Pre-order strongly recommended.',
@@ -830,8 +842,16 @@ const VP = {
     document.getElementById('vp-clabel').textContent  = 'Select your stem count';
     document.getElementById('vp-price').textContent   = '—';
     document.getElementById('vp-addons').innerHTML    = '';
+
+    // Set product photo as panel background
+    const panel = document.getElementById('builder-visual');
+    panel.style.backgroundImage = `url('images/${product.photo}')`;
+
+    // Dark wash + subtle brand-color vignette over the photo
     document.getElementById('vp-bg').style.background =
-      `radial-gradient(ellipse 85% 85% at 55% 45%, ${product.bgColor} 0%, transparent 70%), #1a1a1a`;
+      `linear-gradient(180deg, rgba(0,0,0,0.42) 0%, rgba(0,0,0,0.72) 100%),
+       radial-gradient(ellipse 85% 85% at 55% 45%, ${product.bgColor} 0%, transparent 70%)`;
+
     // Hide all particles
     this.particles.forEach(p => { p.classList.remove('visible'); p.textContent = product.emoji; });
   },
@@ -865,11 +885,12 @@ const VP = {
     const hex = color.hex.startsWith('linear') ? '#D4748A' : color.hex;
 
     // Very noticeable background glow — blooms up from the bottom like a sunrise
+    // Dark wash stays on top of photo for readability; color glow lights it from within
     document.getElementById('vp-bg').style.background =
-      `radial-gradient(ellipse 130% 110% at 50% 80%, ${hex}75 0%, ${hex}45 20%, ${hex}18 45%, transparent 70%),
-       radial-gradient(ellipse 80% 70% at 15% 95%, ${hex}45 0%, transparent 50%),
-       radial-gradient(ellipse 60% 50% at 85% 5%,  ${hex}30 0%, transparent 45%),
-       #1a1a1a`;
+      `linear-gradient(180deg, rgba(0,0,0,0.32) 0%, rgba(0,0,0,0.62) 100%),
+       radial-gradient(ellipse 130% 110% at 50% 80%, ${hex}80 0%, ${hex}50 20%, ${hex}20 45%, transparent 70%),
+       radial-gradient(ellipse 80% 70% at 15% 95%, ${hex}50 0%, transparent 50%),
+       radial-gradient(ellipse 60% 50% at 85% 5%,  ${hex}35 0%, transparent 45%)`;
 
     // Inset + outset edge glow on the panel
     const panel = document.getElementById('builder-visual');
@@ -948,14 +969,13 @@ function startOver() {
 function renderCatalog() {
   document.getElementById('product-grid').innerHTML = PRODUCTS.map(p => `
     <div class="product-card" onclick="openProduct('${p.id}')">
-      <div class="product-card-visual">
-        <div class="product-card-visual-bg" style="background:radial-gradient(ellipse 70% 80% at 60% 40%,${p.bgColor} 0%,transparent 70%),#1a1a1a"></div>
-        <span class="product-card-emoji">${p.emoji}</span>
-      </div>
-      <div class="product-card-body">
+      <div class="product-card-photo" style="background-image:url('images/${p.photo}')"></div>
+      <div class="product-card-overlay"></div>
+      <div class="product-card-eyebrow">From The Garden</div>
+      <div class="product-card-content">
         <div class="product-card-name">${p.name}</div>
-        <div class="product-card-desc">${p.tagline}</div>
-        <div class="product-card-price-row">
+        <div class="product-card-tagline">${p.tagline}</div>
+        <div class="product-card-row">
           <div class="product-card-price">From $${Math.min(...p.stemOptions.map(s=>s.price)).toLocaleString()} <small>/ order</small></div>
           <div class="product-card-cta">Customize →</div>
         </div>
