@@ -117,6 +117,20 @@
     }
     .vp-photo-lift.active{opacity:1}
 
+    /* Screen-blend brighten layer — only used for light colors (white/cream).
+       Pushes dark photo pixels toward the overlay color so roses actually look bright. */
+    .vp-photo-bright{
+      position:absolute;inset:0;
+      background:transparent;
+      mix-blend-mode:screen;
+      pointer-events:none;
+      transition:background 0.55s ease, opacity 0.55s ease;
+      opacity:0;
+      z-index:0;
+    }
+    .vp-photo-bright.active{opacity:0.22}
+    .vp-photo-bright.active.strong{opacity:0.42}
+
     /* Dark wash + color glow over the photo */
     .vp-bg{
       position:absolute;inset:0;
@@ -639,6 +653,7 @@
       <div class="builder-visual" id="builder-visual">
         <div class="vp-photo-tint" id="vp-tint"></div>
         <div class="vp-photo-lift" id="vp-lift"></div>
+        <div class="vp-photo-bright" id="vp-bright"></div>
         <div class="vp-bg" id="vp-bg"></div>
         <div class="vp-roses" id="vp-roses"></div>
         <div class="vp-color-ring" id="vp-ring"></div>
@@ -741,11 +756,11 @@ const PRODUCTS = [
     ],
     colors:[
       {id:'red',      label:'Classic Red',  hex:'#C0392B', emoji:'🌹'},
-      {id:'white',    label:'Pure White',   hex:'#F5F0EB', emoji:'🤍'},
-      {id:'pink',     label:'Blush Pink',   hex:'#D4748A', emoji:'🌸'},
+      {id:'white',    label:'Pure White',   hex:'#FAFAFA', emoji:'🤍'},
+      {id:'pink',     label:'Blush Pink',   hex:'#EC5694', emoji:'🌸'},
       {id:'peach',    label:'Soft Peach',   hex:'#E8A87C', emoji:'🍑'},
       {id:'lavender', label:'Lavender',     hex:'#C9A7D4', emoji:'💜'},
-      {id:'mixed',    label:'Mixed',        hex:'linear-gradient(135deg,#C0392B 0%,#D4748A 40%,#F5F0EB 70%,#E8C94F 100%)', emoji:'💐'},
+      {id:'mixed',    label:'Mixed',        hex:'linear-gradient(135deg,#C0392B 0%,#EC5694 40%,#FAFAFA 70%,#E8C94F 100%)', emoji:'💐'},
     ],
     addOns:ADDONS, bgColor:'rgba(192,57,43,0.2)',
   },
@@ -763,11 +778,11 @@ const PRODUCTS = [
     ],
     colors:[
       {id:'red',      label:'Classic Red', hex:'#C0392B', emoji:'🌹'},
-      {id:'white',    label:'Pure White',  hex:'#F5F0EB', emoji:'🤍'},
-      {id:'pink',     label:'Soft Pink',   hex:'#F4A7B9', emoji:'🩷'},
+      {id:'white',    label:'Pure White',  hex:'#FAFAFA', emoji:'🤍'},
+      {id:'pink',     label:'Soft Pink',   hex:'#F177B8', emoji:'🩷'},
       {id:'lavender', label:'Lavender',    hex:'#C9A7D4', emoji:'💜'},
       {id:'peach',    label:'Soft Peach',  hex:'#E8A87C', emoji:'🍑'},
-      {id:'mixed',    label:'Mixed',       hex:'linear-gradient(135deg,#C0392B 0%,#F4A7B9 40%,#F5F0EB 70%,#C9A7D4 100%)', emoji:'💐'},
+      {id:'mixed',    label:'Mixed',       hex:'linear-gradient(135deg,#C0392B 0%,#F177B8 40%,#FAFAFA 70%,#C9A7D4 100%)', emoji:'💐'},
     ],
     addOns:ADDONS, bgColor:'rgba(244,167,185,0.2)',
   },
@@ -784,12 +799,12 @@ const PRODUCTS = [
       {id:'50',  label:'50 Stems',  stems:50,  price:265},
     ],
     colors:[
-      {id:'white',    label:'Pure White',  hex:'#F5F0EB', emoji:'🤍'},
-      {id:'pink',     label:'Blush Pink',  hex:'#D4748A', emoji:'🌸'},
+      {id:'white',    label:'Pure White',  hex:'#FAFAFA', emoji:'🤍'},
+      {id:'pink',     label:'Blush Pink',  hex:'#EC5694', emoji:'🌸'},
       {id:'peach',    label:'Soft Peach',  hex:'#E8A87C', emoji:'🍑'},
       {id:'yellow',   label:'Soft Yellow', hex:'#E8C94F', emoji:'🌼'},
       {id:'lavender', label:'Lavender',    hex:'#C9A7D4', emoji:'💜'},
-      {id:'mixed',    label:'Mixed',       hex:'linear-gradient(135deg,#F5F0EB 0%,#D4748A 35%,#E8A87C 65%,#E8C94F 100%)', emoji:'💐'},
+      {id:'mixed',    label:'Mixed',       hex:'linear-gradient(135deg,#FAFAFA 0%,#EC5694 35%,#E8A87C 65%,#E8C94F 100%)', emoji:'💐'},
     ],
     addOns:ADDONS, bgColor:'rgba(212,116,138,0.2)',
   },
@@ -808,9 +823,9 @@ const PRODUCTS = [
     colors:[
       {id:'red',   label:'Deep Red',    hex:'#8B1A1A', emoji:'🌺'},
       {id:'white', label:'Cream White', hex:'#F5F0EB', emoji:'🤍'},
-      {id:'pink',  label:'Dusty Pink',  hex:'#C9788A', emoji:'🌸'},
+      {id:'pink',  label:'Dusty Pink',  hex:'#D14B82', emoji:'🌸'},
       {id:'peach', label:'Soft Peach',  hex:'#E8A87C', emoji:'🍑'},
-      {id:'mixed', label:'Mixed',       hex:'linear-gradient(135deg,#8B1A1A 0%,#C9788A 40%,#F5F0EB 70%,#E8A87C 100%)', emoji:'💐'},
+      {id:'mixed', label:'Mixed',       hex:'linear-gradient(135deg,#8B1A1A 0%,#D14B82 40%,#F5F0EB 70%,#E8A87C 100%)', emoji:'💐'},
     ],
     addOns:ADDONS, bgColor:'rgba(139,26,26,0.25)',
   },
@@ -905,13 +920,16 @@ const VP = {
     const panel = document.getElementById('builder-visual');
     panel.style.backgroundImage = `url('images/${product.photo}')`;
 
-    // Reset photo tint, brightness lift, and color chip
+    // Reset photo tint, brightness lift, bright pass, and color chip
     const tint = document.getElementById('vp-tint');
     tint.classList.remove('active');
     tint.style.background = 'transparent';
     const lift = document.getElementById('vp-lift');
     lift.classList.remove('active');
     lift.style.background = 'transparent';
+    const bright = document.getElementById('vp-bright');
+    bright.classList.remove('active');
+    bright.style.background = 'transparent';
     const chip = document.getElementById('vp-chip');
     chip.classList.remove('visible','pop');
     chip.innerHTML = '';
@@ -966,6 +984,22 @@ const VP = {
     const lift = document.getElementById('vp-lift');
     lift.style.background = tintBg;
     lift.classList.add('active');
+
+    // Aggressive screen-blend brightening for white-family colors.
+    // Without this, "white roses" just look like grey roses because mix-blend-mode:color
+    // can't add brightness. Screen pushes dark pixels toward the overlay color.
+    const bright = document.getElementById('vp-bright');
+    bright.classList.remove('strong');
+    if (color.id === 'white') {
+      // Pure neutral white overlay — no warm cream, no cool blue
+      bright.style.background = '#FFFFFF';
+      bright.classList.add('active','strong');
+    } else {
+      // Subtle screen lift in the chosen color so the photo brightens
+      // toward the swatch hue — keeps the rendered roses matching the picker swatch.
+      bright.style.background = tintBg;
+      bright.classList.add('active');
+    }
 
     // Soft brand color glow under the dark wash for warmth around the edges
     document.getElementById('vp-bg').style.background =
